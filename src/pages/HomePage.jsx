@@ -4,6 +4,7 @@ import InputFileUpload from '../assets/components/UploadFile'
 import ButtonAppBar from '../assets/components/Navbar'
 import BasicSelect from '../assets/components/SelectDept'
 import DisableElevation from '../assets/components/Button'
+import Divider from '@mui/material/Divider';
 
 const HomePage = () => {
   return (
@@ -18,9 +19,13 @@ const HomePage = () => {
            <div className="Filterright">
            <DisableElevation />
            </div>
+           
         </div>
-        <div className="Details">
+        <Divider component="li" />
+        <div className="Detailscont">
+            <div className="Details">
 
+            </div>
         </div>
         <div className="Upload">
 
