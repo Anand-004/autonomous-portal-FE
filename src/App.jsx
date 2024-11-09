@@ -1,15 +1,14 @@
-import { useState } from 'react'
-import InputFileUpload from './assets/components/UploadFile'
 
-
+import './App.css'
+import HomePage from './pages/HomePage'
 
 
 function App() {
 
   return (
-    <>
-      <InputFileUpload />
-    </>
+    <div className="container">
+      <HomePage />
+    </div>
   )
 }
 

@@ -1,0 +1,43 @@
+.HomepageContainer{
+    width: 100%;
+    
+}
+
+.Navbar{
+    width: 100%;
+    /* position: fixed; */
+}
+.Filter{
+    width: 100%;
+    display: flex;
+    /* background-color: aquamarine; */
+    
+
+}
+.Filterleft{
+    width: 75%;
+    display: flex;
+    /* background-color: bisque; */
+    justify-content: center;
+    align-items:center ;
+}
+
+.Filterright{
+    width: 25%;
+    /* background-color: aqua; */
+    display: flex;
+    height: 50px;
+    align-items: center;
+    
+    
+}
+
+h3{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+
+
+
