@@ -10,12 +10,12 @@ import TableRow from '@mui/material/TableRow';
 import DescriptionIcon from '@mui/icons-material/Description';
 
 const columns = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'regno', label: 'Register\u00a0Number', minWidth: 100 },
+  { id: 'name', label: <strong>Name</strong>, minWidth: 170 },
+  { id: 'regno', label: <strong>Register Number</strong>, minWidth: 100 },
   
   {
     id: 'receipt',
-    label: 'Download receipt',
+    label: <strong >Download receipt</strong>,
     minWidth: 170,
     align: 'center'
   },
@@ -23,7 +23,7 @@ const columns = [
 
 function createData(name,regno,receipt) {
 //   const density = population / size;
-  return { name,regno,receipt};
+  return {name,regno,receipt};
 }
 
 const rows = [
