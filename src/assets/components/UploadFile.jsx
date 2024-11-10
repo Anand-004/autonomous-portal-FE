@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import * as XLSX from 'xlsx';
 import { insertData } from '../../services/api/main';
+import { useEffect } from 'react';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -38,6 +39,10 @@ export default function InputFileUpload( { sendData } ) {
       console.error("No file selected");
     }
   }
+  // useEffect(()=>{
+  //   console.log(isDisabled)
+  // },[isDisabled])
+  
   return (
     <Button
       component="label"
@@ -52,6 +57,7 @@ export default function InputFileUpload( { sendData } ) {
         onChange={handleFileUpload}
         multiple
       />
+      
     </Button>
   );
 }

@@ -7,6 +7,8 @@ import DisableElevation from '../assets/components/Button'
 import Divider from '@mui/material/Divider';
 import CustomizedTables from '../assets/components/Details'
 import { insertData } from '../services/api/main'
+import LinearIndeterminate from '../assets/components/loading'
+import StickyHeadTable from '../assets/components/table2'
 
 const HomePage = () => {
   const [dept, setDept] = useState('')
@@ -80,7 +82,8 @@ const HomePage = () => {
         <Divider component="li" />
         <div className="Detailscont">
             <div className="Details">
-               <CustomizedTables/>
+               {/* <CustomizedTables/> */}
+               <StickyHeadTable />
             </div>
         </div>
         <div className="Uploaddiv">
@@ -88,6 +91,10 @@ const HomePage = () => {
             <div className="upload">
             <h4>UPLOAD YOUR EXCEL SHEET HERE</h4>
             <InputFileUpload sendData={ sendData } />
+            
+            </div>
+            <div className="uploadloading">
+              <div className="loadingani"> <LinearIndeterminate /></div>
             </div>
         </div>
     </div>
