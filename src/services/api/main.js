@@ -28,18 +28,32 @@ export const fetchDepartments = async () => {
     }
   };
 
-  export const insertData = async (data) => {
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/student/insert`,
-        data
-      ); 
-      console.log(response);
-      return true;
+  
+export const insertData = async (dept_id, batch_id, data) => {
+  try {
+    // console.log("Sending data:",
+    //   "dept - ", dept_id,
+    //   "batch - ", batch_id,
+    //    data);
 
-    } catch (err) {
-      // setError('Error fetching Batches');
-      console.error(err);
-      return false;
-    }
-  };
+    // Send POST request
+    const response = await axios.post(`${BASE_URL}/students/insert`, {
+      dept : dept_id,
+      batch : batch_id,
+      data : data
+    });
+
+    // Log the successful response
+    console.log("Response received:", response);
+    
+    // Return the actual response data, or any success flag you need
+    return response.data;
+
+  } catch (err) {
+    // Log detailed error
+    console.error("Error during data insertion:", err.response || err.message);
+
+    // Optionally, return an error message for further handling
+    return { success: false, message: err.response?.data?.message || 'An error occurred during data insertion.' };
+  }
+};
