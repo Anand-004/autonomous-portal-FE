@@ -18,12 +18,7 @@ const VisuallyHiddenInput = styled('input')({
   
 });
 
-export default function InputFileUpload() {
-  // need to send dept, batch in this data
-  const sendData = async(data) =>{
-    const inserted = await insertData(data)
-    if(inserted) console.log("Data  Inserted")
-  }
+export default function InputFileUpload( { sendData } ) {
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -36,7 +31,7 @@ export default function InputFileUpload() {
         const worksheet = workbook.Sheets[sheetName];
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
         console.log(jsonData);
-        // sendData(jsonData)
+        sendData(jsonData)
       };
       reader.readAsArrayBuffer(file); 
     } else {

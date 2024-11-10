@@ -6,11 +6,17 @@ import BasicSelect from '../assets/components/SelectDept'
 import DisableElevation from '../assets/components/Button'
 import Divider from '@mui/material/Divider';
 import CustomizedTables from '../assets/components/Details'
+import { insertData } from '../services/api/main'
 
 const HomePage = () => {
   const [dept, setDept] = useState('')
   const [batch, setBatch] = useState('')
   const [bothSelected, setBothSelected] = useState(true)
+
+  const sendData = async(data) =>{
+    const inserted = await insertData(dept, batch, data)
+    if(inserted) alert("Data Sent to BE")
+  }
   useEffect(()=>{
     console.log(dept, "---",batch)
     if(dept.length>1 && batch.length>1){
@@ -42,7 +48,7 @@ const HomePage = () => {
            
             <div className="upload">
             <h4>UPLOAD YOUR EXCEL SHEET HERE</h4>
-            <InputFileUpload />
+            <InputFileUpload sendData={ sendData } />
             </div>
         </div>
     </div>
