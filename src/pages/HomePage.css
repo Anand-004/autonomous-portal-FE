@@ -38,6 +38,7 @@
     width: 85%;
     background-color: blanchedalmond;
     height: 200px;
+    margin-top: 30px;
 }
 
 .Detailscont{
@@ -45,13 +46,13 @@
     display: flex;
     justify-content: center;
     padding-top: 10px;
-    display: none;
 }
 
 .Uploaddiv{
     width: 100%;
-    display: flex;
+    display: none;
     justify-content: center;
+    align-items: center;
 }
 .upload{
     width: 80%;
@@ -64,6 +65,24 @@
     border-radius: 40px;
     margin-top: 80px;
     border: 0.5px solid #c0bfbf;
+}
+.uploadloading{
+    width: 80%;
+    width: 80%;
+    height: 300px;
+    /* background-color: blue; */
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+    margin-top: 80px;
+    padding: 30px;
+    border: 0.5px solid #c0bfbf;
+}
+
+.loadingani{
+    width: 300px;
 }
 
 .upload h4{
