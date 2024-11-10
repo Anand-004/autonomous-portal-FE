@@ -13,8 +13,47 @@ const HomePage = () => {
   const [batch, setBatch] = useState('')
   const [bothSelected, setBothSelected] = useState(true)
 
+  function formatSemAndSub(obj) {
+    const result = [];
+    let currentSem = null;
+    let currentSubjects = [];
+
+    for (let key in obj) {
+        if (key.startsWith('SEM')) {
+          
+            if (currentSem !== null) {
+                result.push({ sem_no: currentSem, subjects: currentSubjects });
+            }
+
+            currentSem = obj[key];
+            currentSubjects = [];
+        } else {
+
+            currentSubjects.push({ code: key, name: obj[key] });
+        }
+    }
+
+    if (currentSem !== null) {
+        result.push({ sem_no: currentSem, subjects: currentSubjects });
+    }
+
+    return result;
+}
+
+
+  const formatData = (data) =>{
+    const semData = formatSemAndSub(data.shift())
+    const studentData = data
+    return{
+      semesters: semData,
+      students: studentData
+    }
+
+  }
   const sendData = async(data) =>{
-    const inserted = await insertData(dept, batch, data)
+    const finalData = formatData(data)
+    console.log("Final Data - ",finalData)
+    const inserted = await insertData(dept, batch, finalData)
     if(inserted) alert("Data Sent to BE")
   }
   useEffect(()=>{
