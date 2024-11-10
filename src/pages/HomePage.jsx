@@ -5,6 +5,7 @@ import ButtonAppBar from '../assets/components/Navbar'
 import BasicSelect from '../assets/components/SelectDept'
 import DisableElevation from '../assets/components/Button'
 import Divider from '@mui/material/Divider';
+import CustomizedTables from '../assets/components/Details'
 
 const HomePage = () => {
   return (
@@ -24,7 +25,7 @@ const HomePage = () => {
         <Divider component="li" />
         <div className="Detailscont">
             <div className="Details">
-
+               <CustomizedTables/>
             </div>
         </div>
         <div className="Upload">
