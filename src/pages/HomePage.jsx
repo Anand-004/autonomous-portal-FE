@@ -38,8 +38,12 @@ const HomePage = () => {
                <CustomizedTables/>
             </div>
         </div>
-        <div className="Upload">
+        <div className="Uploaddiv">
+           
+            <div className="upload">
+            <h4>UPLOAD YOUR EXCEL SHEET HERE</h4>
             <InputFileUpload />
+            </div>
         </div>
     </div>
   )

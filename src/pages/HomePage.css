@@ -45,6 +45,30 @@
     display: flex;
     justify-content: center;
     padding-top: 10px;
+    display: none;
+}
+
+.Uploaddiv{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.upload{
+    width: 80%;
+    height: 300px;
+    /* background-color: blue; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+    margin-top: 80px;
+    border: 0.5px solid #c0bfbf;
+}
+
+.upload h4{
+    color: gray;
+    margin-bottom: 30px;
 }
 
 
