@@ -1,16 +1,36 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import FormHelperText from '@mui/material/FormHelperText';
+import { useEffect, useState } from 'react';
+import { fetchBatches, fetchDepartments } from '../../services/api/main';
 
-export default function BasicSelect() {
-  const [age, setAge] = React.useState('');
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
+export default function BasicSelect( {updateDept, updateBatch} ) {
+  const [depts, setDepts] = useState([]);
+  const [batches, setBatches] = useState([]);
+  const [selectedDept, setSelectedDept] = useState('');
+  const [selectedBatch, setSelectedBatch] = useState('');
+  const fetchDatas = async()=>{
+    const depts = await fetchDepartments();
+    // console.log(depts)
+    setDepts(depts.departments)
+    
+    const data = await fetchBatches();
+    // console.log(data.batches)
+    setBatches(data.batches)
+  }
+  useEffect(()=>{
+    fetchDatas()
+  }, [])
+  const handleDeptChange = (event) => {
+    setSelectedDept(event.target.value);
+    updateDept(event.target.value)
+  };
+  const handleBatchChange = (event) => {
+    setSelectedBatch(event.target.value);
+    updateBatch(event.target.value)
   };
 
   return (
@@ -21,13 +41,15 @@ export default function BasicSelect() {
         <Select
           labelId="Department"
           id="Dept"
-          value={age}
+          value={selectedDept}
           label="Department"
-          onChange={handleChange}
+          onChange={handleDeptChange}
         >
-          <MenuItem value={10}>Computer Science And Engineering</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {depts.map( (item) => {
+            return(
+              <MenuItem key={item._id} value={item._id}>{item.department}</MenuItem>
+            )
+          })}
         </Select>
         <FormHelperText>Required*</FormHelperText>
       </FormControl>
@@ -39,13 +61,15 @@ export default function BasicSelect() {
       <Select
         labelId="StudentBatch"
         id="Batch"
-        value={age}
+        value={selectedBatch}
         label="Department"
-        onChange={handleChange}
+        onChange={handleBatchChange}
       >
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
+        {batches.map( (item) => {
+            return(
+              <MenuItem key={item._id} value={item._id}>{item.batch}</MenuItem>
+            )
+          })}
       </Select>
       <FormHelperText>Required*</FormHelperText>
     </FormControl>
