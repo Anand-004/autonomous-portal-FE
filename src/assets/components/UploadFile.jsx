@@ -18,7 +18,7 @@ const VisuallyHiddenInput = styled('input')({
   
 });
 
-export default function InputFileUpload( { sendData } ) {
+export default function InputFileUpload( { sendData, isDisabled } ) {
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -40,6 +40,7 @@ export default function InputFileUpload( { sendData } ) {
   }
   return (
     <Button
+      disabled={isDisabled}
       component="label"
       role={undefined}
       variant="contained"
