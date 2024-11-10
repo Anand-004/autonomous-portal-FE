@@ -9,7 +9,14 @@ import { fetchBatches, fetchDepartments } from '../../services/api/main';
 
 export default function BasicSelect( {updateDept, updateBatch} ) {
   const [depts, setDepts] = useState([]);
-  const [batches, setBatches] = useState([]);
+  const [batches, setBatches] = useState(
+    [
+      "2021",
+      "2022",
+      "2023",
+      "2024",
+    ]
+  );
   const [selectedDept, setSelectedDept] = useState('');
   const [selectedBatch, setSelectedBatch] = useState('');
   const fetchDatas = async()=>{
@@ -17,9 +24,9 @@ export default function BasicSelect( {updateDept, updateBatch} ) {
     // console.log(depts)
     setDepts(depts.departments)
     
-    const data = await fetchBatches();
+    // const data = await fetchBatches();
     // console.log(data.batches)
-    setBatches(data.batches)
+    // setBatches(data.batches)
   }
   useEffect(()=>{
     fetchDatas()
@@ -65,9 +72,9 @@ export default function BasicSelect( {updateDept, updateBatch} ) {
         label="Department"
         onChange={handleBatchChange}
       >
-        {batches.map( (item) => {
+        {batches.map( (item, ind) => {
             return(
-              <MenuItem key={item._id} value={item._id}>{item.batch}</MenuItem>
+              <MenuItem key={ind} value={item}>{item}</MenuItem>
             )
           })}
       </Select>

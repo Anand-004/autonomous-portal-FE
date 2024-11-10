@@ -15,6 +15,33 @@ const HomePage = () => {
   const [batch, setBatch] = useState('')
   const [bothSelected, setBothSelected] = useState(true)
 
+  function convertStudentData(dataList) {
+    const validPaperTypes = ["U", "UA", "Y"]
+    return dataList.map(studentData => {
+        // Create the converted student object
+        const studentConverted = {
+            reg_no: studentData["Reg. Number"],
+            name: studentData["Name of the Student"],
+            papers: []
+        };
+
+        // Iterate through the student's subject data and map them to the desired format
+        for (const key in studentData) {
+            if (key !== "Sl. No." && key !== "Reg. Number" && key !== "Name of the Student") {
+                // Add each paper (subject) with its code and type to the papers array
+                if(validPaperTypes.includes(studentData[key])){
+                  studentConverted.papers.push({
+                    code: key,
+                    type: studentData[key]
+                  })
+                }
+            }
+        }
+
+        return studentConverted;
+    });
+  }
+
   function formatSemAndSub(obj) {
     const result = [];
     let currentSem = null;
@@ -45,7 +72,7 @@ const HomePage = () => {
 
   const formatData = (data) =>{
     const semData = formatSemAndSub(data.shift())
-    const studentData = data
+    const studentData = convertStudentData(data)
     return{
       semesters: semData,
       students: studentData
@@ -55,8 +82,8 @@ const HomePage = () => {
   const sendData = async(data) =>{
     const finalData = formatData(data)
     console.log("Final Data - ",finalData)
-    const inserted = await insertData(dept, batch, finalData)
-    if(inserted) alert("Data Sent to BE")
+    // const inserted = await insertData(dept, batch, finalData)
+    // if(inserted) alert("Data Sent to BE")
   }
   useEffect(()=>{
     console.log(dept, "---",batch)
