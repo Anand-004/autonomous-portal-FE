@@ -11,8 +11,8 @@ import DescriptionIcon from '@mui/icons-material/Description';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.common.black,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -22,6 +22,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
+    
   },
   // hide last border
   '&:last-child td, &:last-child th': {
@@ -29,9 +30,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+// function createData(name, calories, fat, carbs, protein) {
+//   return { name, calories, fat, carbs, protein };
+// }
 
 
 export default function CustomizedTables({ studentData }) {
@@ -76,7 +77,7 @@ export default function CustomizedTables({ studentData }) {
               <StyledTableCell component="th" scope="row">
                 {row.name}
               </StyledTableCell>
-              <StyledTableCell align="center"><a href='receipt-' target='_blank'><DescriptionIcon /></a></StyledTableCell>
+              <StyledTableCell align="center"><a href='http://localhost:3001/' target='_blank'><DescriptionIcon /></a></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
