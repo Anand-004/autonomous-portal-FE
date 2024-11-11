@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-export default function InputAdornments() {
+export default function InputAdornments( { password, setPassword} ) {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -28,7 +28,7 @@ export default function InputAdornments() {
        
         <FormControl fullWidth  variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-          <OutlinedInput fullWidth
+          <OutlinedInput value={password} onChange={ (e)=> setPassword(e.target.value) } fullWidth
             id="outlined-adornment-password"
             type={showPassword ? 'text' : 'password'}
             endAdornment={

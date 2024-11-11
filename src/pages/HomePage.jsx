@@ -116,13 +116,14 @@ const HomePage = () => {
            
         </div>
         <Divider component="li" />
-        <div className="Detailscont">
+
+        {studentData.length>0 ? (<div className="Detailscont">
             <div className="Details">
                <CustomizedTables studentData = { studentData }/>
                {/* <StickyHeadTable /> */}
             </div>
-        </div>
-        <div className="Uploaddiv">
+        </div>):
+        (<div className="Uploaddiv">
            
             <div className="upload">
             <h4>UPLOAD YOUR EXCEL SHEET HERE</h4>
@@ -132,7 +133,8 @@ const HomePage = () => {
             <div className="uploadloading">
               <div className="loadingani"> <LinearIndeterminate /></div>
             </div>
-        </div>
+        </div>)
+        }
     </div>
   )
 }

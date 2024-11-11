@@ -1,19 +1,41 @@
 
 import './App.css'
-import HomePage from './pages/HomePage'
-import LoginPage from './pages/LoginPage'
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
 
+const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-function App() {
+  useEffect(() => {
+    const authStatus = localStorage.getItem('token');
+    if (authStatus) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem('auth');  // Clear auth status
+  };
 
   return (
-    <div className="container">
+    <Router>
+      <div>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<LoginPage />} />
+          
+          {/* Protected Route */}
+          <Route 
+            path="/home" 
+            element={isAuthenticated ? <HomePage /> : <LoginPage />} 
+          />
+        </Routes>
+      </div>
+    </Router>
+  );
+};
 
-      <LoginPage />
-      <HomePage />
-      
-    </div>
-  )
-}
-
-export default App
+export default App;
