@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,6 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useEffect, useState } from 'react';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -32,11 +33,32 @@ function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
-  createData(712922104012,'Charukesh S',20),
-];
 
-export default function CustomizedTables() {
+export default function CustomizedTables({ studentData }) {
+  useEffect(()=>{
+    let data = []
+    if(studentData.length>0){
+      data = studentData?.map( std =>{
+        return(
+          {
+            name: std.name,
+            reg_no: std.reg_no,
+            id: std._id
+          }
+        )
+      })
+    }
+    setRows(data)
+  },[studentData])
+  const [rows, setRows] = useState(
+    [
+      {
+        "name" : "Adhi",
+        "reg_no": "44546516161",
+        "id": "5647984654"
+      }
+    ]
+    )
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -44,17 +66,17 @@ export default function CustomizedTables() {
           <TableRow>
             <StyledTableCell>Register Number</StyledTableCell>
             <StyledTableCell align="left">Name</StyledTableCell>
-            <StyledTableCell align="right">Fees</StyledTableCell>
+            <StyledTableCell align="center">Fees</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <StyledTableRow key={row.name}>
+              <StyledTableCell align="left">{row.reg_no}</StyledTableCell>
               <StyledTableCell component="th" scope="row">
                 {row.name}
               </StyledTableCell>
-              <StyledTableCell align="left">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="center"><a href='receipt-' target='_blank'><DescriptionIcon /></a></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
