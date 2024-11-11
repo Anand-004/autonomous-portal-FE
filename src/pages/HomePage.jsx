@@ -115,7 +115,7 @@ const HomePage = () => {
            </div>
            
         </div>
-        <Divider component="li" />
+        <Divider/>
 
         {studentData.length>0 ? (<div className="Detailscont">
             <div className="Details">

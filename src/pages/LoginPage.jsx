@@ -47,7 +47,7 @@ const LoginPage = () => {
                         <InputAdornments password ={ password } setPassword={ setPassword } />
                     </div>
                     <div className="divide">
-                    <Divider component="li" />
+                    <Divider />
 
                     </div>
 
