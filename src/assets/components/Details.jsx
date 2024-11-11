@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useEffect, useState } from 'react';
-import DescriptionIcon from '@mui/icons-material/Description';
+import PDFGenerator from './PDFGen';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,6 +36,44 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 export default function CustomizedTables({ studentData }) {
+  const [finalData, setFinalData] = useState([])
+  function calTotalFee(data) {
+    return data.reduce((total, item) => {
+      return total + parseFloat(item.paper.paper_cost); // Parse paper_cost as a number and sum
+    }, 0); // Initial total is 0
+  }
+  
+  // Function to calculate number of arrears
+  function calArrears(data) {
+    return data.reduce((count, item) => {
+      // Increment count if type is "U" or "UA"
+      return (item.type === "U" || item.type === "UA") ? count + 1 : count;
+    }, 0); // Initial count is 0
+  }
+  const formatReceiptData =(data) =>{
+    return {
+      name : data.name,
+      regNo: data.reg_no,
+      dob: '14/11/2004',
+      totalFees: calTotalFee(data.papers),
+      subjects: data.papers.map( paperObj =>{
+        return{
+          semester: "01",
+          code: paperObj.paper.code,
+          title: paperObj.paper.name
+        }
+      }),
+      arrears: calArrears(data.papers)
+    }
+  }
+ function handleReceipt(id){
+  console.log(id)
+    const student= studentData.find(std => std._id === id)
+    // console.log(student)
+    const formattedData = formatReceiptData(student)
+    console.log(formattedData) // final Data
+    setFinalData([formattedData])
+  }
   useEffect(()=>{
     let data = []
     if(studentData.length>0){
@@ -77,7 +115,7 @@ export default function CustomizedTables({ studentData }) {
               <StyledTableCell component="th" scope="row">
                 {row.name}
               </StyledTableCell>
-              <StyledTableCell align="center"><a href='http://localhost:3001/' target='_blank'><DescriptionIcon /></a></StyledTableCell>
+              <StyledTableCell align="center"><PDFGenerator id ={row.id} handleReceipt = { handleReceipt } receiptData = { finalData }/></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
