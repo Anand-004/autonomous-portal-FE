@@ -27,7 +27,7 @@ function createData(name,regno,receipt) {
 }
 
 const rows = [
-  createData('Santhosh perumal','1324171354',<a href='' target='_blank'><DescriptionIcon /></a>),
+  createData('Santhosh perumal','1324171354',<a href='receipt-' target='_blank'><DescriptionIcon /></a>),
 ];
 
 export default function StickyHeadTable() {
