@@ -25,9 +25,12 @@ function createData(name,regno,receipt) {
 //   const density = population / size;
   return {name,regno,receipt};
 }
+const handleClick = (e) =>{
+  console.log(e.target.id)
+}
 
 const rows = [
-  createData('Santhosh perumal','1324171354',<a href='' target='_blank'><DescriptionIcon /></a>),
+  createData('Santhosh perumal','1324171354',<a href='' onClick={handleClick} target='_blank'><DescriptionIcon /></a> ),
 ];
 
 export default function StickyHeadTable() {
@@ -64,6 +67,7 @@ export default function StickyHeadTable() {
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
+                console.log(row)
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                     {columns.map((column) => {
@@ -75,7 +79,8 @@ export default function StickyHeadTable() {
                             : value}
                         </TableCell>
                       );
-                    })}
+                    })
+                    }
                   </TableRow>
                 );
               })}

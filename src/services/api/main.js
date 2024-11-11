@@ -27,6 +27,19 @@ export const fetchDepartments = async () => {
       return [];
     }
   };
+  
+  export const fetchStudentsData = async (data) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/students/all`,data); 
+      console.log(response.data);
+      return response.data.data;
+
+    } catch (err) {
+      // setError('Error fetching Batches');
+      console.error(err);
+      return [];
+    }
+  };
 
   
 export const insertData = async (dept_id, batch_id, data) => {

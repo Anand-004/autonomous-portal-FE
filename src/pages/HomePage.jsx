@@ -6,7 +6,7 @@ import BasicSelect from '../assets/components/SelectDept'
 import DisableElevation from '../assets/components/Button'
 import Divider from '@mui/material/Divider';
 import CustomizedTables from '../assets/components/Details'
-import { insertData } from '../services/api/main'
+import { fetchStudentsData, insertData } from '../services/api/main'
 import LinearIndeterminate from '../assets/components/loading'
 import StickyHeadTable from '../assets/components/table2'
 
@@ -92,6 +92,15 @@ const HomePage = () => {
       console.log("upd")
     }
   }, [dept, batch])
+  const [studentData, setStudentData] = useState([])
+  const handleFilter = async() =>{
+    const reqData = {
+      dept_id : dept,
+      batch: batch
+    }
+    const resData = await fetchStudentsData(reqData);
+    setStudentData(resData)
+  }
   return (
     <div className="HomepageContainer">
         <div className="Navbar">
@@ -102,15 +111,15 @@ const HomePage = () => {
            <BasicSelect updateDept={setDept} updateBatch={setBatch}/>
            </div>
            <div className="Filterright">
-           <DisableElevation isDisabled={bothSelected}/>
+           <DisableElevation handleFilter={ handleFilter } isDisabled={bothSelected}/>
            </div>
            
         </div>
         <Divider component="li" />
         <div className="Detailscont">
             <div className="Details">
-               {/* <CustomizedTables/> */}
-               <StickyHeadTable />
+               <CustomizedTables studentData = { studentData }/>
+               {/* <StickyHeadTable /> */}
             </div>
         </div>
         <div className="Uploaddiv">
