@@ -59,7 +59,7 @@ export default function CustomizedTables({ studentData }) {
       subjects: data.papers.map( paperObj =>{
         return{
           semester: "01",
-          code: paperObj.paper.code,
+          code: paperObj.paper.code.includes("T+L") ? paperObj.paper.code.slice(0,6) : paperObj.paper.code,
           title: paperObj.paper.name
         }
       }),

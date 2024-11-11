@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import pdf from './../../pdfs/template.pdf';
+import DescriptionIcon from '@mui/icons-material/Description';
+
 
 // Sample student data
-const students = [
+const dummyData = [
   {
     name: "ABISHEK B",
     regNo: "712922104001",
@@ -25,7 +27,12 @@ const students = [
   // Add more student objects if needed
 ];
 
-function PDFGenerator2() {
+function PDFGenerator({ id, handleReceipt, receiptData }) {
+  const [students, setStudentData] = useState([])
+  useEffect(()=>{
+    setStudentData(receiptData)
+    console.log("receiptData -- ", receiptData)
+  }, [receiptData])
   const [pdfUrl, setPdfUrl] = useState(null);
   const createPDF = async (student) => {
     // Fetch the PDF template
@@ -42,16 +49,16 @@ function PDFGenerator2() {
     const color = rgb(0, 0, 0);
 
     // Add dynamic data
-    firstPage.drawText(`${student.name}, { x: 110, y: 733, size: fontSize, font, color }`);
-    firstPage.drawText(`${student.regNo}, { x: 455, y: 745, size: fontSize, font, color }`);
-    firstPage.drawText(`${student.dob}, { x: 455, y: 733, size: fontSize, font, color }`);
-    firstPage.drawText(`Rs.${student.totalFees}, { x: 430, y: 100, size: fontSize, color: rgb(0, 0, 0) }`);
-    firstPage.drawText(`${student.arrears}, { x: 160, y: 100, size: fontSize, color: rgb(0, 0, 0) }`);
+    firstPage.drawText(`${student.name}`, { x: 110, y: 733, size: fontSize, font, color });
+    firstPage.drawText(`${student.regNo}`, { x: 455, y: 745, size: fontSize, font, color });
+    firstPage.drawText(`${student.dob}`, { x: 455, y: 733, size: fontSize, font, color });
+    firstPage.drawText(`Rs.${student.totalFees}`, { x: 430, y: 100, size: fontSize, color: rgb(0, 0, 0) });
+    firstPage.drawText(`${student.arrears}`, { x: 160, y: 100, size: fontSize, color: rgb(0, 0, 0) });
 
     // Add subjects dynamically
     let yPosition = 680;
     student.subjects.forEach((subject) => {
-      firstPage.drawText(`${subject.semester}       ${subject.code}         ${subject.title}, { x: 35, y: yPosition, size: fontSize, font, color }`);
+      firstPage.drawText(`${subject.semester}       ${subject.code}         ${subject.title}`, { x: 35, y: yPosition, size: fontSize, font, color });
       yPosition -= 15; // Adjust line height
     });
 
@@ -71,10 +78,12 @@ function PDFGenerator2() {
 
   return (
     <div>
-      <h1>Generate PDF Registration Form Preview</h1>
-      <button onClick={handleGeneratePDF}>Generate PDF in New Tab</button>
+      <button id={id} onClick={ async(e) => {
+        await handleReceipt(e.target.id);
+        handleGeneratePDF()
+      }}><span style={{ pointerEvents: "none" }}><DescriptionIcon /></span></button>
     </div>
   );
 }
 
-export default PDFGenerator2;
+export default PDFGenerator;
