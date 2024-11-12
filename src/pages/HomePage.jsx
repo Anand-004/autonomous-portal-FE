@@ -82,13 +82,20 @@ const HomePage = () => {
   }
   
   const sendData = async(data) =>{
-    setIsLoad(true)
-    const finalData = formatData(data)
-    console.log("Final Data - ",finalData)
-    const inserted = await insertData(dept, batch, finalData)
-    setIsLoad(false)
-    if(inserted) alert("Data Sent to BE")
+    try{
+      setIsLoad(true)
+      const finalData = formatData(data)
+      console.log("Final Data - ",finalData)
+      const inserted = await insertData(dept, batch, finalData)
+      setIsLoad(false)
+      handleFilter()
+      if(inserted) alert("Data Sent to BE")
+    }catch(err){
+        console.log("Error in uploaded Data Format", err)
+        alert ("Incorrect Excel Format !")
+    }
   }
+
   useEffect(()=>{ 
     console.log(dept, "---",batch)
     if(dept.length>1 && batch.length>1){
@@ -98,12 +105,14 @@ const HomePage = () => {
   }, [dept, batch])
   const [studentData, setStudentData] = useState([])
   const handleFilter = async() =>{
+    setBothSelected(!bothSelected)
     const reqData = {
       dept_id : dept,
       batch: batch
     }
     const resData = await fetchStudentsData(reqData);
     setStudentData(resData)
+    setBothSelected(!bothSelected)
   }
   return (
     <div className="HomepageContainer">
@@ -131,7 +140,7 @@ const HomePage = () => {
         (<div className="Uploaddiv">
             <div className="upload">
               <h4>UPLOAD YOUR EXCEL SHEET HERE</h4>
-              <InputFileUpload sendData={ sendData } />
+              <InputFileUpload isDisabled= { studentData.length>0 && bothSelected } sendData={ sendData } />
             </div>
           </div>)
             :
