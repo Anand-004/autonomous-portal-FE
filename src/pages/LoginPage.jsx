@@ -7,9 +7,29 @@ import InputAdornments from '../assets/components/Passwordfield';
 import AppBar1 from '../assets/components/Navbar1';
 import { AdminLogin } from '../services/api/Auth';
 import { useNavigate } from 'react-router-dom';
+import AutohideSnackbar from '../assets/components/snackbar';
+import Snackbar from '@mui/material/Snackbar';
+
 
 
 const LoginPage = () => {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
+
+
+
+
     const navigate = useNavigate();
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -29,7 +49,14 @@ const LoginPage = () => {
         }
         const Authenticated = await AdminLogin(data)
 
-        if(Authenticated) navigate('/home');
+        if(Authenticated) {navigate('/home')
+            window.location.reload()
+        }
+        else{
+            handleClick();
+            setIsDisabled(false);
+        };
+        // window.location.reload();                                   // refreshing page each time routed to /home....!
     }
     return (
     <div>
@@ -56,6 +83,15 @@ const LoginPage = () => {
                     </div>
                 </div>
             </div>
+            {/* <AutohideSnackbar /> */}
+            
+      {/* <Button onClick={handleClick}>Open Snackbar</Button> */}
+      <Snackbar
+        open={open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        message="Invalid Username or password"
+      />
         </div>
     </div>
   )

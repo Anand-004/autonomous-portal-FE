@@ -24,7 +24,7 @@ export default function AutohideSnackbar() {
         open={open}
         autoHideDuration={5000}
         onClose={handleClose}
-        message="This Snackbar will be dismissed in 5 seconds."
+        message="Invalid Username or password"
       />
     </div>
   );
