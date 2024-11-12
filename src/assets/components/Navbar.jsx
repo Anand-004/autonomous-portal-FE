@@ -10,24 +10,24 @@ export default function ButtonAppBar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    
-    
-    
-    // Redirect to login page
+    // Clear authentication data and redirect
+    sessionStorage.removeItem('token');
     navigate('/');
-// Clear authentication data (e.g., token) from local storage
-   sessionStorage.removeItem('token');
-
-   //clears all storage by logout session and route to /
-   window.location.href = window.location.href;
+    window.location.href = window.location.href;
   };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            RVS Technical Campus-Coimbatore
+          {/* Adjust logo styling here */}
+          <img 
+            src="src/images/rvs_logo-removebg-preview.png" 
+            alt="logo" 
+            style={{ width: 50, height: 50, marginRight: 16 }} 
+          />
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+            RVS Technical Campus-Coimbatore (Autonomous) - Fees Portal
           </Typography>
           <Button color="inherit" onClick={handleLogout}>Logout</Button>
         </Toolbar>

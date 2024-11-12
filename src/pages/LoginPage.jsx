@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import './LoginPage.css'
+//import './LoginPage.css'
+import './Login2.css'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -7,7 +8,7 @@ import InputAdornments from '../assets/components/Passwordfield';
 import AppBar1 from '../assets/components/Navbar1';
 import { AdminLogin } from '../services/api/Auth';
 import { useNavigate } from 'react-router-dom';
-import AutohideSnackbar from '../assets/components/snackbar';
+// import AutohideSnackbar from '../assets/components/snackbar';
 import Snackbar from '@mui/material/Snackbar';
 
 

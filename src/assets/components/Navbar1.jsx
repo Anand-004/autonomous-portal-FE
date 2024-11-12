@@ -19,8 +19,13 @@ export default function AppBar1() {
           >
             <MenuIcon />
           </IconButton> */}
+          <img 
+            src="src/images/rvs_logo-removebg-preview.png" 
+            alt="logo" 
+            style={{ width: 50, height: 50, marginRight: 16 }} 
+          />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            RVS Technical Campus-Coimbatore Autonomous Fees Portal
+            RVS Technical Campus-Coimbatore (Autonomous) - Fees Portal
           </Typography>
           
         </Toolbar>
