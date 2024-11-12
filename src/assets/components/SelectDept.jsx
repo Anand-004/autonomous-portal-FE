@@ -52,7 +52,7 @@ export default function BasicSelect( {updateDept, updateBatch} ) {
           label="Department"
           onChange={handleDeptChange}
         >
-          {depts.map( (item) => {
+          {depts?.map( (item) => {
             return(
               <MenuItem key={item._id} value={item._id}>{item.department}</MenuItem>
             )

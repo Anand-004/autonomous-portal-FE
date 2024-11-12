@@ -15,7 +15,8 @@ const HomePage = () => {
   const [dept, setDept] = useState('')
   const [batch, setBatch] = useState('')
   const [bothSelected, setBothSelected] = useState(true)
-
+  const [isLoad, setIsLoad] = useState(false)
+  
   function convertStudentData(dataList) {
     const validPaperTypes = ["U", "UA", "Y"]
     return dataList.map(studentData => {
@@ -80,13 +81,16 @@ const HomePage = () => {
     }
 
   }
+  
   const sendData = async(data) =>{
+    setIsLoad(true)
     const finalData = formatData(data)
     console.log("Final Data - ",finalData)
     const inserted = await insertData(dept, batch, finalData)
+    setIsLoad(false)
     if(inserted) alert("Data Sent to BE")
   }
-  useEffect(()=>{
+  useEffect(()=>{ 
     console.log(dept, "---",batch)
     if(dept.length>1 && batch.length>1){
       setBothSelected(false)
@@ -124,17 +128,17 @@ const HomePage = () => {
                {/* <StickyHeadTable /> */}
             </div>
         </div>):
+        !isLoad?
         (<div className="Uploaddiv">
-           
             <div className="upload">
-            <h4>UPLOAD YOUR EXCEL SHEET HERE</h4>
-            <InputFileUpload sendData={ sendData } />
-            
+              <h4>UPLOAD YOUR EXCEL SHEET HERE</h4>
+              <InputFileUpload sendData={ sendData } />
             </div>
-            <div className="uploadloading">
+          </div>)
+            :
+           ( <div className="uploadloading">
               <div className="loadingani"> <LinearIndeterminate /></div>
-            </div>
-        </div>)
+            </div>)
         }
     </div>
   )

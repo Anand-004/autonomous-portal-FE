@@ -2,7 +2,7 @@ import React from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Button } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
-import pdf from './../../pdfs/template.pdf';
+import pdf from './../../pdfs/receipt.pdf';
 import { Download } from '@mui/icons-material';
 
 const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
