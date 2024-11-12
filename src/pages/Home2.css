@@ -1,0 +1,145 @@
+/* Resetting default margins and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Container styling */
+  .HomepageContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f4f7fc;
+  }
+  
+  /* Navbar Styling */
+  .Navbar {
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background-color: #1976d2;  /* Navbar Color */
+  }
+  
+  /* Filter Section Styling */
+  .Filter {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    margin-top: 80px; /* Push content below the navbar */
+    align-items: center;
+  }
+  
+  .Filterleft {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .Filterright {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Details and Upload Section */
+  .Detailscont {
+    margin-top: 2rem;
+    padding: 2rem;
+  }
+  
+  .Details {
+    margin-top: 1.5rem;
+  }
+  
+  /* Upload Section */
+  .Uploaddiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 3rem;
+  }
+  
+  .upload {
+    text-align: center;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .upload h4 {
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .uploadloading {
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .uploadloading .loadingani {
+    padding: 2rem;
+  }
+  
+  /* Button and Select Styling */
+  button, .MuiSelect-root {
+    font-size: 1rem;
+    background-color: #1976d2;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover, .MuiSelect-root:hover {
+    background-color: #155a9d;
+  }
+  
+  button:disabled, .MuiSelect-root:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Divider Styling */
+  .MuiDivider-root {
+    margin: 1.5rem 0;
+  }
+  
+  /* Loading Animation - Make it visible on loading */
+  .uploadloading.show {
+    display: flex;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .Filter {
+      flex-direction: column;
+      padding: 1rem;
+    }
+  
+    .Filterleft,
+    .Filterright {
+      margin-bottom: 1rem;
+    }
+  
+    .Uploaddiv {
+      margin-top: 2rem;
+    }
+  
+    .upload {
+      padding: 1.5rem;
+      width: 90%;
+    }
+  }
+  

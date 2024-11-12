@@ -29,7 +29,7 @@ const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
     let subjectYPosition = 680;
     student.subjects.forEach((subject) => {
       firstPage.drawText(
-        `${subject.semester}       ${subject.code}         ${subject.title}`,
+        `${subject.semester}          ${subject.code}         ${subject.title}`,
         { x: 35, y: subjectYPosition, size: fontSize, font, color }
       );
       subjectYPosition -= 15;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import './HomePage.css'
+// import './HomePage.css'
+import './Home2.css'
 import InputFileUpload from '../assets/components/UploadFile'
 import ButtonAppBar from '../assets/components/Navbar'
 import BasicSelect from '../assets/components/SelectDept'
