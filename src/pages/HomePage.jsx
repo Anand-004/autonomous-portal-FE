@@ -130,6 +130,7 @@ const HomePage = () => {
            
         </div>
         <Divider/>
+        
 
         {studentData.length>0 ? (<div className="Detailscont">
             <div className="Details">
@@ -145,9 +146,10 @@ const HomePage = () => {
             </div>
           </div>)
             :
-           ( <div className="uploadloading">
-              <div className="loadingani"> <LinearIndeterminate /></div>
-            </div>)
+           (<div className="uploadcont2"><div className="uploadloading">
+            <h3>Please wait while uploading</h3>
+                  <div className="loadingani">  <LinearIndeterminate /></div>
+                </div></div>)
         }
     </div>
   )

@@ -4,6 +4,7 @@ import { Button } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
 import pdf from './../../pdfs/receipt.pdf';
 import { Download } from '@mui/icons-material';
+import { blue } from '@mui/material/colors';
 
 const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
   // Function to create a single student's PDF
@@ -120,8 +121,8 @@ const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
   return (
     <>
     {receiptData&&
-      <Button onClick={handleGeneratePDF} variant="outlined">
-        <DescriptionIcon />
+      <Button onClick={handleGeneratePDF} variant="none" >
+        <DescriptionIcon  sx={{ color: blue[500], fontSize: 24, mr: 0 }} />
       </Button>}
       {allReceiptData && (
         <Button onClick={handleGeneratePDFs} variant="outlined" style={{ marginLeft: '10px' }}>
