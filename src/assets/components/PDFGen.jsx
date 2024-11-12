@@ -102,7 +102,17 @@ const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
     const pdfBytes = await createPDFForStudents(allReceiptData);
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
-    window.open(url, '_blank');
+    
+    // Create an anchor element to download the file with a specific filename
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = 'All_Students_Receipts.pdf'; // Set your desired filename here
+    document.body.appendChild(anchor);
+    anchor.click();
+
+    // Clean up by revoking the object URL and removing the anchor
+    URL.revokeObjectURL(url);
+    document.body.removeChild(anchor);
   };
 
     // Generate individual PDF
@@ -115,7 +125,19 @@ const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
     const pdfBytes = await createPDFForStudent(receiptData);
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
-    window.open(url, '_blank');
+
+     // Create an anchor element to download the file with a specific filename
+     const anchor = document.createElement('a');
+     anchor.href = url;
+     anchor.download = `${receiptData.name.replace(' ', '_')}_FeesReceipt`; // Set your desired filename here
+     document.body.appendChild(anchor);
+     anchor.click();
+    //  window.open(url, '_blank');
+
+ 
+     // Clean up by revoking the object URL and removing the anchor
+     URL.revokeObjectURL(url);
+     document.body.removeChild(anchor);
   };
 
   return (
