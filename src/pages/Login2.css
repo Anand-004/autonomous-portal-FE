@@ -1,0 +1,91 @@
+/* Base styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Login page container styling */
+  .Loginpagecontainer {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+  }
+  
+  /* Navbar styling */
+  .navbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  /* Login box styling */
+  .loginbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 80px; /* Pushes below the navbar */
+  }
+  
+  /* Inner box styling */
+  .box {
+    width: 100%;
+  }
+  
+  /* Username and Password field styling */
+  .username,
+  .password {
+    margin-bottom: 1.5rem;
+  }
+  
+  .divide {
+    margin: 1.5rem 0;
+  }
+  
+  /* Login button styling */
+  .loginbutton {
+    margin-top: 1rem;
+  }
+  
+  .loginbutton button {
+    background-color: #1976d2;
+    color: #fff;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .loginbutton button:hover {
+    background-color: #155a9d;
+  }
+  
+  /* Snackbar message styling */
+  .MuiSnackbar-root {
+    bottom: 10px !important;
+  }
+  
+  .MuiSnackbarContent-root {
+    background-color: #e53935;
+    color: #fff;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .loginbox {
+      padding: 1.5rem;
+      margin-top: 100px; /* Adjust margin for smaller screens */
+    }
+  }
+  

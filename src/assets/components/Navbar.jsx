@@ -1,29 +1,35 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
-
 export default function ButtonAppBar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear authentication data and redirect
+    sessionStorage.removeItem('token');
+    navigate('/');
+    window.location.href = window.location.href;
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          {/* <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton> */}
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            RVS Technical Campus-Coimbatore
+          {/* Adjust logo styling here */}
+          <img 
+            src="src/images/rvs_logo-removebg-preview.png" 
+            alt="logo" 
+            style={{ width: 50, height: 50, marginRight: 16 }} 
+          />
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+            RVS Technical Campus-Coimbatore (Autonomous) - Fees Portal
           </Typography>
-          <Button color="inherit">Logout</Button>
+          <Button color="inherit" onClick={handleLogout}>Logout</Button>
         </Toolbar>
       </AppBar>
     </Box>

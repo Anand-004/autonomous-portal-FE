@@ -40,11 +40,11 @@ const CustomizedTables = ({ studentData }) => {
     dob: '14/11/2004',
     totalFees: data.papers.reduce((total, item) => total + parseFloat(item.paper.paper_cost), 0),
     subjects: data.papers.map((paperObj) => ({
-      semester: '01',
+      semester: paperObj.paper.sem_no,
       code: paperObj.paper.code.includes('T+L') ? paperObj.paper.code.slice(0, 6) : paperObj.paper.code,
       title: paperObj.paper.name,
     })),
-    arrears: data.papers.filter((item) => item.type === 'U' || item.type === 'UA').length,
+    arrears: data.papers.length,
   });
 
   // Preprocess the student data to set rows
