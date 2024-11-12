@@ -47,7 +47,7 @@ export default function CustomizedTables({ studentData }) {
   function calArrears(data) {
     return data.reduce((count, item) => {
       // Increment count if type is "U" or "UA"
-      return (item.type === "U" || item.type === "UA") ? count + 1 : count;
+      return count + 1;
     }, 0); // Initial count is 0
   }
   const formatReceiptData =(data) =>{
