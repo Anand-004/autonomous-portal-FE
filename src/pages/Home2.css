@@ -51,6 +51,8 @@
   .Detailscont {
     margin-top: 2rem;
     padding: 2rem;
+    display: none;
+    
   }
   
   .Details {
@@ -59,11 +61,18 @@
   
   /* Upload Section */
   .Uploaddiv {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     margin-top: 3rem;
+  }
+
+  .uploadcont2{
+    min-width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .upload {
@@ -81,7 +90,7 @@
   }
   
   .uploadloading {
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
   }
@@ -89,28 +98,40 @@
   .uploadloading .loadingani {
     padding: 2rem;
   }
+
+  .uploadloading h3{
+    color: gray;
+  }
   
   /* Button and Select Styling */
-  button, .MuiSelect-root {
-    font-size: 1rem;
-    background-color: #1976d2;
-    color: white;
-    padding: 0.7rem 1.5rem;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover, .MuiSelect-root:hover {
-    background-color: #155a9d;
-  }
-  
-  button:disabled, .MuiSelect-root:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
+  /* Button and Select Styling */
+/* Button and Select Styling */
+button, .MuiSelect-root {
+  font-size: 1rem;
+  background-color: #1976d2;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border-radius: 5px;
+  border: 0.5px solid transparent; /* Add a transparent border */
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; /* Add box-shadow transition */
+}
+
+button:hover, .MuiSelect-root:hover {
+  background-color: ivory;
+  border-width: 0.5px;
+  border-color: black;
+  box-shadow: 0 0 0 0.5px black; /* Adds a black border-like shadow */
+}
+
+
+
+
+button:disabled, .MuiSelect-root:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
   /* Divider Styling */
   .MuiDivider-root {
     margin: 1.5rem 0;

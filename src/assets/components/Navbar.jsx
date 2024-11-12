@@ -29,7 +29,21 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
             RVS Technical Campus-Coimbatore (Autonomous) - Fees Portal
           </Typography>
-          <Button color="inherit" onClick={handleLogout}>Logout</Button>
+          <Button
+            className='navbutton'
+            color="inherit"
+            onClick={handleLogout}
+            sx={{
+              color: 'white', // Default color
+              transition: 'color 0.3s ease, background-color 0.3s ease', // Smooth transition for color changes
+              '&:hover': {
+                color: '#1976d2', // New color on hover
+                backgroundColor: 'white', // Background on hover
+              },
+            }}
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
