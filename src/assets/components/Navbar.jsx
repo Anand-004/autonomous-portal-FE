@@ -10,11 +10,16 @@ export default function ButtonAppBar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear authentication data (e.g., token) from local storage
-    sessionStorage.removeItem('token');
+    
+    
     
     // Redirect to login page
     navigate('/');
+// Clear authentication data (e.g., token) from local storage
+   sessionStorage.removeItem('token');
+
+   //clears all storage by logout session and route to /
+   window.location.href = window.location.href;
   };
 
   return (
