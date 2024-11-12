@@ -6,7 +6,7 @@ export const AdminLogin = async (data) => {
       const response = await axios.post(`${BASE_URL}/admin/login`,data); 
       console.log(response.data);
       const token = response.data.token
-      localStorage.setItem('token', token)
+      sessionStorage.setItem('token', token)
       if(token) return true
       return false
 

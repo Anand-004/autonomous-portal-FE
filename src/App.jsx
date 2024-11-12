@@ -9,16 +9,13 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const authStatus = localStorage.getItem('token');
+    const authStatus = sessionStorage.getItem('token');
     if (authStatus) {
       setIsAuthenticated(true);
     }
   }, []);
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem('auth');  // Clear auth status
-  };
+ 
 
   return (
     <Router>

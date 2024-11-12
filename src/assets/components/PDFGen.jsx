@@ -1,75 +1,138 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
-import pdf from './../../pdfs/template.pdf';
+import { Button } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
+import pdf from './../../pdfs/template.pdf';
+import { Download } from '@mui/icons-material';
 
-function PDFGenerator({ id, handleReceipt, receiptData }) {
-  const [pdfUrl, setPdfUrl] = useState(null);
-
-  // Function to create the PDF
-  const createPDF = async (student) => {
-    const templateBytes = await fetch(pdf).then(res => res.arrayBuffer());
+const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
+  // Function to create a single student's PDF
+  const createPDFForStudent = async (student) => {
+    const templateBytes = await fetch(pdf).then((res) => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(templateBytes);
-    const pages = pdfDoc.getPages();
-    const firstPage = pages[0];
-
-    // Define font and styling
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
     const fontSize = 5;
     const color = rgb(0, 0, 0);
 
-    // Add dynamic data to the PDF
-    firstPage.drawText(`${student.name}`, { x: 110, y: 733, size: fontSize, font, color });
-    firstPage.drawText(`${student.regNo}`, { x: 455, y: 745, size: fontSize, font, color });
-    firstPage.drawText(`${student.dob}`, { x: 455, y: 733, size: fontSize, font, color });
+    const pages = pdfDoc.getPages();
+    let firstPage = pages[0]; // Use the first page of the template
+    let yPosition = 733; // Initial y-position for student data
+
+    // Populate the dynamic fields on the PDF for the student
+    firstPage.drawText(`${student.name}`, { x: 110, y: yPosition, size: fontSize, font, color });
+    firstPage.drawText(`${student.regNo}`, { x: 455, y: yPosition + 12, size: fontSize, font, color });
+    firstPage.drawText(`${student.dob}`, { x: 455, y: yPosition, size: fontSize, font, color });
     firstPage.drawText(`Rs.${student.totalFees}`, { x: 430, y: 100, size: fontSize, color });
     firstPage.drawText(`${student.arrears}`, { x: 160, y: 100, size: fontSize, color });
 
-    // Add subjects dynamically
-    let yPosition = 680;
+    // Add subjects
+    let subjectYPosition = 680;
     student.subjects.forEach((subject) => {
-      firstPage.drawText(`${subject.semester}       ${subject.code}         ${subject.title}`, { x: 35, y: yPosition, size: fontSize, font, color });
-      yPosition -= 15;
+      firstPage.drawText(
+        `${subject.semester}       ${subject.code}         ${subject.title}`,
+        { x: 35, y: subjectYPosition, size: fontSize, font, color }
+      );
+      subjectYPosition -= 15;
     });
 
-    // Save the modified PDF as a byte array
+    // If the content overflows, add a new page
+    if (subjectYPosition < 100) {
+      firstPage = pdfDoc.addPage(); // Add a new page
+      yPosition = 733; // Reset yPosition
+    }
+
+    // Save the modified PDF for one student
     const pdfBytes = await pdfDoc.save();
     return pdfBytes;
   };
 
+  // Function to generate a PDF with receipts for all students
+  const createPDFForAllStudents = async (students) => {
+    const pdfDoc = await PDFDocument.create(); // Create a new PDF document
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    const fontSize = 5;
+    const color = rgb(0, 0, 0);
+
+    // Loop through all students and add their data to the template
+    for (const student of students) {
+      const templateBytes = await fetch(pdf).then((res) => res.arrayBuffer());
+      const templateDoc = await PDFDocument.load(templateBytes);
+      const pages = templateDoc.getPages();
+      let firstPage = pages[0]; // Use the first page of the template
+      let yPosition = 733; // Initial y-position for student data
+
+      // Populate the dynamic fields on the PDF for the student
+      firstPage.drawText(`${student.name}`, { x: 110, y: yPosition, size: fontSize, font, color });
+      firstPage.drawText(`${student.regNo}`, { x: 455, y: yPosition + 12, size: fontSize, font, color });
+      firstPage.drawText(`${student.dob}`, { x: 455, y: yPosition, size: fontSize, font, color });
+      firstPage.drawText(`Rs.${student.totalFees}`, { x: 430, y: 100, size: fontSize, color });
+      firstPage.drawText(`${student.arrears}`, { x: 160, y: 100, size: fontSize, color });
+
+      // Add subjects
+      let subjectYPosition = 680;
+      student.subjects.forEach((subject) => {
+        firstPage.drawText(
+          `${subject.semester}       ${subject.code}         ${subject.title}`,
+          { x: 35, y: subjectYPosition, size: fontSize, font, color }
+        );
+        subjectYPosition -= 15;
+      });
+
+      // If the content overflows, add a new page for the next student
+      if (subjectYPosition < 100) {
+        firstPage = pdfDoc.addPage(); // Add a new page for the next student
+        yPosition = 733; // Reset yPosition
+      }
+
+      // Import the modified page into the main PDF
+      const [newPage] = await pdfDoc.copyPages(templateDoc, [0]);
+      pdfDoc.addPage(newPage);
+    }
+
+    // Save and return the combined PDF with all students
+    const pdfBytes = await pdfDoc.save();
+    return pdfBytes;
+  };
+
+  // Generate individual PDF
   const handleGeneratePDF = async () => {
-    if (!receiptData || receiptData.length === 0) {
-      console.warn("No student data available.");
+    if (!receiptData) {
+      console.warn('No student data available.');
       return;
     }
 
-    // Use the latest receiptData directly
-    const pdfBytes = await createPDF(receiptData[0]);
-    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    const pdfBytes = await createPDFForStudent(receiptData);
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
-
-    // Open the PDF in a new tab
     window.open(url, '_blank');
   };
 
-  useEffect(() => {
-    if (receiptData && receiptData.length > 0) {
-      handleGeneratePDF(); // Generate PDF after receiptData updates
+  // Generate all students' PDF
+  const handleDownloadAll = async () => {
+    if (!allReceiptData || allReceiptData.length === 0) {
+      console.warn('No student data available.');
+      return;
     }
-  }, [receiptData]);
+
+    const pdfBytes = await createPDFForAllStudents(allReceiptData);
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  };
 
   return (
-    <div>
-      <button
-        id={id}
-        onClick={async (e) => {
-          await handleReceipt(e.target.id); // Update receipt data
-        }}
-      >
-        <span style={{ pointerEvents: "none" }}><DescriptionIcon /></span>
-      </button>
-    </div>
+    <>
+    {receiptData&&
+      <Button onClick={handleGeneratePDF} variant="outlined">
+        <DescriptionIcon />
+      </Button>}
+      {allReceiptData && (
+        <Button onClick={handleDownloadAll} variant="outlined" style={{ marginLeft: '10px' }}>
+          Download All <Download />
+        </Button>
+      )}
+    </>
   );
-}
+};
 
 export default PDFGenerator;
