@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import './HomePage.css'
+// import './HomePage.css'
+import './Home2.css'
 import InputFileUpload from '../assets/components/UploadFile'
 import ButtonAppBar from '../assets/components/Navbar'
 import BasicSelect from '../assets/components/SelectDept'
@@ -82,8 +83,8 @@ const HomePage = () => {
   const sendData = async(data) =>{
     const finalData = formatData(data)
     console.log("Final Data - ",finalData)
-    // const inserted = await insertData(dept, batch, finalData)
-    // if(inserted) alert("Data Sent to BE")
+    const inserted = await insertData(dept, batch, finalData)
+    if(inserted) alert("Data Sent to BE")
   }
   useEffect(()=>{
     console.log(dept, "---",batch)
