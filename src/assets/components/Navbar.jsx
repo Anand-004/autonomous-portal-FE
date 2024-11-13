@@ -12,7 +12,7 @@ export default function ButtonAppBar() {
   const handleLogout = () => {
     // Clear authentication data and redirect
     sessionStorage.removeItem('token');
-    navigate('/');
+    navigate('/',{ replace: true });
     window.location.href = window.location.href;
   };
 
