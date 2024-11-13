@@ -25,7 +25,7 @@ export default function AppBar1() {
             style={{ width: 50, height: 50, marginRight: 16 }} 
           />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            RVS Technical Campus-Coimbatore (Autonomous) - Fees Portal
+            RVS Technical Campus-Coimbatore (Autonomous)
           </Typography>
           
         </Toolbar>

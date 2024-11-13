@@ -2,7 +2,7 @@ import React from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Button } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
-import pdf from './../../pdfs/receipt.pdf';
+import pdf from './../../pdfs/ogfte.pdf';
 import { Download } from '@mui/icons-material';
 import { blue } from '@mui/material/colors';
 
@@ -17,23 +17,26 @@ const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
 
     const pages = pdfDoc.getPages();
     let firstPage = pages[0]; // Use the first page of the template
-    let yPosition = 733; // Initial y-position for student data
+    let yPosition = 670; // Initial y-position for student data
 
     // Populate the dynamic fields on the PDF for the student
-    firstPage.drawText(`${student.name}`, { x: 110, y: yPosition, size: fontSize, font, color });
+    firstPage.drawText(`${student.name}`, { x: 130, y: 674, size: fontSize, font, color });
+    firstPage.drawText(`B.E.Computer Science And Engineering`, { x: 130, y: 674-12, size: fontSize, font, color });
+
     firstPage.drawText(`${student.regNo}`, { x: 455, y: yPosition + 12, size: fontSize, font, color });
     firstPage.drawText(`${student.dob}`, { x: 455, y: yPosition, size: fontSize, font, color });
-    firstPage.drawText(`Rs.${student.totalFees}`, { x: 430, y: 100, size: fontSize, color });
-    firstPage.drawText(`${student.arrears}`, { x: 160, y: 100, size: fontSize, color });
+    firstPage.drawText(`2021`, { x: 455, y: yPosition - 12, size: fontSize, font, color });
+    firstPage.drawText(`Total Fees : Rs.${student.totalFees}`, { x: 430, y: 233, size: 9,font, color });
+    firstPage.drawText(`No of Subjects: ${student.arrears}`, { x: 160, y: 233, size: fontSize,font, color });
 
     // Add subjects
-    let subjectYPosition = 680;
+    let subjectYPosition = 615;
     student.subjects.forEach((subject) => {
       firstPage.drawText(
-        `0${subject.semester}          ${subject.code}         ${subject.title}`,
-        { x: 32, y: subjectYPosition, size: fontSize, font, color }
+        `0${subject.semester}                ${subject.code}                            ${subject.title}`,
+        { x: 53, y: subjectYPosition, size: fontSize, font, color }
       );
-      subjectYPosition -= 15;
+      subjectYPosition -= 12;
     });
 
     // If the content overflows, add a new page
@@ -131,14 +134,18 @@ const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
      anchor.href = url;
      anchor.download = `${receiptData.name.replace(' ', '_')}_FeesReceipt`; // Set your desired filename here
      document.body.appendChild(anchor);
-     anchor.click();
-    //  window.open(url, '_blank');
+    //  anchor.click();
+     window.open(url, '_blank');
 
  
      // Clean up by revoking the object URL and removing the anchor
      URL.revokeObjectURL(url);
      document.body.removeChild(anchor);
   };
+
+
+
+  
 
   return (
     <>
