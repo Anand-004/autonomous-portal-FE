@@ -5,7 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import FormHelperText from '@mui/material/FormHelperText';
 import { useEffect, useState } from 'react';
-import { fetchBatches, fetchDepartments } from '../../services/api/main';
+import { fetchDepartments } from '../../services/api/main';
 
 export default function BasicSelect( {updateDept, updateBatch} ) {
   const [depts, setDepts] = useState([]);

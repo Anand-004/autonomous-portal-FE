@@ -3,10 +3,16 @@ import { BASE_URL } from "../config";
 
 
 export const fetchDepartments = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/main/dept`); 
+  const token = sessionStorage.getItem('token')
+  console.log("token - " , token)
+  try {
+    const response = await axios.get(`${BASE_URL}/main/dept`, {
+        headers: {
+          token: token // Assuming 'token' is a valid authorization token
+        }
+      }); 
       console.log(response.data);
-      return response.data;
+      return response.data; 
 
     } catch (err) {
       // setError('Error fetching departments');
@@ -14,23 +20,30 @@ export const fetchDepartments = async () => {
       return [];
     }
   };
-
-  export const fetchBatches = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/main/batch`); 
-      console.log(response.data);
-      return response.data;
-
-    } catch (err) {
-      // setError('Error fetching Batches');
-      console.error(err);
-      return [];
-    }
-  };
+  
+  // export const fetchBatches = async () => {
+  //   try {
+  //     const response = await axios.get(`${BASE_URL}/main/batch`); 
+  //     console.log(response.data);
+  //     return response.data;
+  
+  //   } catch (err) {
+  //     // setError('Error fetching Batches');
+  //     console.error(err);
+  //     return [];
+  //   }
+  // };
   
   export const fetchStudentsData = async (data) => {
+    const token = sessionStorage.getItem('token')
     try {
-      const response = await axios.post(`${BASE_URL}/students/all`,data); 
+      const response = await axios.post(`${BASE_URL}/students/all`,data ,
+        {
+          headers: {
+            token: token // Assuming 'token' is a valid authorization token
+          }
+        }
+      ); 
       console.log(response.data);
       return response.data.data;
 
@@ -43,6 +56,7 @@ export const fetchDepartments = async () => {
 
   
 export const insertData = async (dept_id, batch_id, data) => {
+  const token = sessionStorage.getItem('token')
   try {
     // console.log("Sending data:",
     //   "dept - ", dept_id,
@@ -54,7 +68,13 @@ export const insertData = async (dept_id, batch_id, data) => {
       dept : dept_id,
       batch : batch_id,
       data : data
-    });
+    },
+    {
+      headers: {
+        token: token // Assuming 'token' is a valid authorization token
+      }
+    }
+    );
 
     // Log the successful response
     console.log("Response received:", response);

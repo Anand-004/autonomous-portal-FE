@@ -17,13 +17,27 @@ const HomePage = () => {
   const [bothSelected, setBothSelected] = useState(true)
   const [isLoad, setIsLoad] = useState(false)
   
+  const excelDateToJSDate = (serial) => {
+    const epoch = new Date(Date.UTC(1900, 0, 1)); // Excel's start date is January 1, 1900
+    return new Date(epoch.getTime() + (serial - 2) * 86400000); // Subtract 2 because Excel's epoch starts at 1900
+  };
+
+  const formatDateToDDMMYYYY = (date) => {
+    const day = String(date.getDate()).padStart(2, '0'); // Ensure 2 digits for day
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2 digits for month (0-based index)
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   function convertStudentData(dataList) {
     const validPaperTypes = ["U", "UA", "Y"]
     return dataList.map(studentData => {
-        // Create the converted student object
+        const SerialToDate = excelDateToJSDate(studentData["DOB"])
+        // console.log(studentData)
         const studentConverted = {
             reg_no: studentData["Reg. Number"],
             name: studentData["Name of the Student"],
+            dob: formatDateToDDMMYYYY(SerialToDate),
             papers: []
         };
 
@@ -39,7 +53,6 @@ const HomePage = () => {
                 }
             }
         }
-
         return studentConverted;
     });
   }
@@ -73,6 +86,7 @@ const HomePage = () => {
 
 
   const formatData = (data) =>{
+    console
     const semData = formatSemAndSub(data.shift())
     const studentData = convertStudentData(data)
     return{

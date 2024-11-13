@@ -9,6 +9,7 @@ import { blue } from '@mui/material/colors';
 const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
   // Function to create a single student's PDF
   const createPDFForStudent = async (student) => {
+    console.log(student)
     const templateBytes = await fetch(pdf).then((res) => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(templateBytes);
     const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
