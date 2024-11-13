@@ -19,32 +19,43 @@ const VisuallyHiddenInput = styled('input')({
 export default function InputFileUpload({ sendData, isDisabled }) {
   React.useEffect(()=>{
     console.log("isDisabled - ", isDisabled)
-  },[isDisabled])
+  },[isDisabled]);
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
+    console.log(file);
+  
     if (file) {
-      try{
+      try {
         const reader = new FileReader();
+        
         reader.onload = (event) => {
-          const data = new Uint8Array(event.target.result);
-          const workbook = XLSX.read(data, { type: 'array' });
-          const sheetName = workbook.SheetNames[0];
-          const worksheet = workbook.Sheets[sheetName];
-          const jsonData = XLSX.utils.sheet_to_json(worksheet);
-          console.log(jsonData);
-          sendData(jsonData);
-        }
-      }catch(err){
-        console.error("Wrong File Uploaded", err)
-        alert("Please upload correct excel file")
+          try {
+            const data = new Uint8Array(event.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+            console.log(jsonData);
+            sendData(jsonData);
+          } catch (dataProcessingError) {
+            console.error("Error processing data:", dataProcessingError);
+            alert("An error occurred while processing the file data.");
+          }
+        };
+  
+        // Call `readAsArrayBuffer` here, outside the `onload` function
+        reader.readAsArrayBuffer(file);
+  
+      } catch (fileReadingError) {
+        console.error("Error reading file:", fileReadingError);
+        alert("An error occurred while reading the file.");
       }
-      reader.readAsArrayBuffer(file); 
     } else {
       console.error("No file selected");
-      alert("No file selected ")
+      alert("No file selected");
     }
-  }
-
+  };
+  
   return (
     <Button
       disabled={isDisabled}
@@ -58,7 +69,7 @@ export default function InputFileUpload({ sendData, isDisabled }) {
       <VisuallyHiddenInput
         type="file"
         accept=".xls, .xlsx"  // Only allow Excel file types
-        onChange={handleFileUpload}
+        onChange={(e)=> handleFileUpload(e)}
         multiple={false}      // Optional: set multiple to false if you want a single file upload
       />
     </Button>

@@ -50,7 +50,7 @@ const LoginPage = () => {
         }
         const Authenticated = await AdminLogin(data)
 
-        if(Authenticated) {navigate('/home')
+        if(Authenticated) {navigate('/home',{ replace: true })
             window.location.reload()
         }
         else{

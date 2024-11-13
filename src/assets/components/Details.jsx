@@ -13,20 +13,22 @@ import { Download } from '@mui/icons-material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    // backgroundColor: theme.palette.common.black,
-    // color: theme.palette.common.white,
-    backgroundColor: theme.palette.common.white, // Set background color to white
-    color: theme.palette.common.black,           // Set text color to black
-    fontWeight: 'bold',                          // Make the header bold
-    fontSize: '1.1rem',   
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.common.black,
+    fontWeight: 'bold',
+    fontSize: '1.1rem',
+    padding: 'px', // Customize padding for height adjustment
+    height: '64px', // Set custom height as desired
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
   },
 }));
+
 const StyledNameCell = styled(StyledTableCell)({
-  paddingLeft: '200px', // Adjust this value as needed
+  paddingLeft: '200px',
 });
+
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
@@ -53,7 +55,6 @@ const CustomizedTables = ({ studentData }) => {
     arrears: data.papers.length,
   });
 
-  // Preprocess the student data to set rows
   useEffect(() => {
     const processedData = studentData.map((student) => ({
       id: student._id,
@@ -76,12 +77,14 @@ const CustomizedTables = ({ studentData }) => {
           allReceiptData={studentData.map((student) => formatReceiptData(student))}
         />
       </div>
-      <TableContainer component={Paper}
-        elevation={3} // Default shadow effect
+      <TableContainer
+        component={Paper}
+        elevation={3}
         sx={{
-          boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)', // Custom shadow for stronger effect
+          boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
           borderRadius: '8px',
-        }}>
+        }}
+      >
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -95,7 +98,7 @@ const CustomizedTables = ({ studentData }) => {
               <StyledTableRow key={row.id}>
                 <StyledTableCell align="left" sx={{ paddingLeft: '30px' }}>{row.reg_no}</StyledTableCell>
                 <StyledNameCell component="th" scope="row" align="left">
-                    {row.name}
+                  {row.name}
                 </StyledNameCell>
                 <StyledTableCell align="center">
                   <PDFGenerator

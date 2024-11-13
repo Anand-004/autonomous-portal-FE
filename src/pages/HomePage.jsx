@@ -83,7 +83,6 @@ const HomePage = () => {
   }
   
   const sendData = async(data) =>{
-    try{
       setIsLoad(true)
       const finalData = formatData(data)
       console.log("Final Data - ",finalData)
@@ -91,10 +90,6 @@ const HomePage = () => {
       setIsLoad(false)
       handleFilter()
       if(inserted) alert("Data Sent to BE")
-    }catch(err){
-        console.log("Error in uploaded Data Format", err)
-        alert ("Incorrect Excel Format !")
-    }
   }
 
   useEffect(()=>{ 
