@@ -9,6 +9,7 @@ import { blue } from '@mui/material/colors';
 const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
   // Function to create a single student's PDF
   const createPDFForStudent = async (student) => {
+    console.log(student)
     const templateBytes = await fetch(pdf).then((res) => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(templateBytes);
     const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
@@ -131,8 +132,8 @@ const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
      anchor.href = url;
      anchor.download = `${receiptData.name.replace(' ', '_')}_FeesReceipt`; // Set your desired filename here
      document.body.appendChild(anchor);
-     anchor.click();
-    //  window.open(url, '_blank');
+    //  anchor.click();
+     window.open(url, '_blank');
 
  
      // Clean up by revoking the object URL and removing the anchor

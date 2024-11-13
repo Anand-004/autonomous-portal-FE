@@ -40,12 +40,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const CustomizedTables = ({ studentData }) => {
   const [rows, setRows] = useState([]);
-
+  useEffect(()=>{
+    console.log("data - ", studentData)
+  },[studentData])
   // Format the data for PDF generation
   const formatReceiptData = (data) => ({
     name: data.name,
     regNo: data.reg_no,
-    dob: '14/11/2004',
+    dob: data.dob ? data.dob : '07/05/2005',
     totalFees: data.papers.reduce((total, item) => total + parseFloat(item.paper.paper_cost), 0),
     subjects: data.papers.map((paperObj) => ({
       semester: paperObj.paper.sem_no,
@@ -60,6 +62,7 @@ const CustomizedTables = ({ studentData }) => {
       id: student._id,
       name: student.name,
       reg_no: student.reg_no,
+      dob: student.dob
     }));
     setRows(processedData);
   }, [studentData]);
