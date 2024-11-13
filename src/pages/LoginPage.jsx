@@ -65,6 +65,9 @@ const LoginPage = () => {
             <div className="navbar">
                 <AppBar1/>
             </div>
+            <div className="loginname">
+                <h2>ADMIN LOGIN</h2>
+            </div>
             <div className="loginbox">
                 <div className="box">
                     <div className="username">

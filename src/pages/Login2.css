@@ -39,6 +39,10 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin-top: 80px; /* Pushes below the navbar */
   }
+
+  .loginname{
+    color: black;
+  }
   
   /* Inner box styling */
   .box {
