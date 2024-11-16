@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import PDFGenerator from './PDFGen';
 import { Button } from '@mui/material';
 import { Download } from '@mui/icons-material';
+import PDFGenh from './PDFGenh';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -70,11 +71,17 @@ const CustomizedTables = ({ studentData }) => {
   const downBtn = {
     float: 'right',
     marginRight: '10px',
+    marginLeft:'10px',
     marginBottom: '20px',
   };
 
   return (
     <>
+    <div style={downBtn}>
+        <PDFGenerator
+          allReceiptData={studentData.map((student) => formatReceiptData(student))}
+        />
+      </div>
       <div style={downBtn}>
         <PDFGenerator
           allReceiptData={studentData.map((student) => formatReceiptData(student))}
@@ -93,6 +100,7 @@ const CustomizedTables = ({ studentData }) => {
             <TableRow>
               <StyledTableCell sx={{ paddingLeft: '30px' }}>Register Number</StyledTableCell>
               <StyledTableCell align="left" sx={{ paddingLeft: '200px' }}>Name</StyledTableCell>
+              <StyledTableCell align="left" sx={{ paddingLeft: '60PX' }}>Hall Ticket</StyledTableCell>
               <StyledTableCell align="center">Fees Receipt</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -103,6 +111,12 @@ const CustomizedTables = ({ studentData }) => {
                 <StyledNameCell component="th" scope="row" align="left">
                   {row.name}
                 </StyledNameCell>
+                <StyledTableCell align="center">
+                  <PDFGenh
+                    id={row.id}
+                    receiptData={formatReceiptData(studentData.find((student) => student._id === row.id))}
+                  />
+                </StyledTableCell>
                 <StyledTableCell align="center">
                   <PDFGenerator
                     id={row.id}

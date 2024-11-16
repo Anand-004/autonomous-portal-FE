@@ -6,9 +6,9 @@ import pdf from './../../pdfs/ogfte.pdf';
 import { Download } from '@mui/icons-material';
 import { blue } from '@mui/material/colors';
 
-const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
-  // Function to create a single student's PDF
-  const createPDFForStudent = async (student) => {
+const PDFGenh = ({ id, receiptData, allReceiptData }) => {
+   // Function to create a single student's PDF
+   const createPDFForStudent = async (student) => {
     console.log(student)
     const templateBytes = await fetch(pdf).then((res) => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(templateBytes);
@@ -152,10 +152,10 @@ const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
     <>
     {receiptData&&
       <Button onClick={handleGeneratePDF} variant="none" >
-        <DescriptionIcon  sx={{ color: 'black', fontSize: 24, mr: 0 }} />
+        <DescriptionIcon  sx={{ color: blue[500], fontSize: 24, mr: 0 }} />
       </Button>}
       {allReceiptData && (
-        <Button onClick={handleGeneratePDFs} variant="outlined" style={{ marginLeft: '10px'}}>
+        <Button onClick={handleGeneratePDFs} variant="outlined" style={{ marginLeft: '10px' }}>
           Download All <Download />
         </Button>
       )}
@@ -163,4 +163,5 @@ const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
   );
 };
 
-export default PDFGenerator;
+
+export default PDFGenh;
