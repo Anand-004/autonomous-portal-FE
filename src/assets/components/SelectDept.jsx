@@ -7,7 +7,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import { useEffect, useState } from 'react';
 import { fetchDepartments } from '../../services/api/main';
 
-export default function BasicSelect( {updateDept, updateBatch} ) {
+export default function BasicSelect( {updateDept, updateBatch, setDeptName} ) {
   const [depts, setDepts] = useState([]);
   const [batches, setBatches] = useState(
     [
@@ -33,7 +33,10 @@ export default function BasicSelect( {updateDept, updateBatch} ) {
   }, [])
   const handleDeptChange = (event) => {
     setSelectedDept(event.target.value);
-    updateDept(event.target.value)
+    updateDept(event.target.value);
+    const dName = depts.find( itm => itm._id === event.target.value)
+    // console.log(depts, selectedDept, dName)
+    setDeptName(dName)
   };
   const handleBatchChange = (event) => {
     setSelectedBatch(event.target.value);

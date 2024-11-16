@@ -38,7 +38,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const CustomizedTables = ({ studentData }) => {
+const CustomizedTables = ({ dept, studentData }) => {
   const [rows, setRows] = useState([]);
   useEffect(()=>{
     console.log("data - ", studentData)
@@ -105,6 +105,7 @@ const CustomizedTables = ({ studentData }) => {
                 </StyledNameCell>
                 <StyledTableCell align="center">
                   <PDFGenerator
+                    dept = { dept }
                     id={row.id}
                     receiptData={formatReceiptData(studentData.find((student) => student._id === row.id))}
                   />

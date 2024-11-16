@@ -13,6 +13,7 @@ import LinearIndeterminate from '../assets/components/loading'
 
 const HomePage = () => {
   const [dept, setDept] = useState('')
+  const [deptName, setDeptName] = useState('')
   const [batch, setBatch] = useState('')
   const [bothSelected, setBothSelected] = useState(true)
   const [isLoad, setIsLoad] = useState(false)
@@ -204,7 +205,7 @@ const HomePage = () => {
         </div>
         <div className="Filter">
            <div className="Filterleft">
-           <BasicSelect updateDept={setDept} updateBatch={setBatch}/>
+           <BasicSelect updateDept={setDept} setDeptName = { setDeptName } updateBatch={setBatch}/>
            </div>
            <div className="Filterright">
            <DisableElevation handleFilter={ handleFilter } isDisabled={bothSelected}/>
@@ -216,7 +217,7 @@ const HomePage = () => {
 
         {studentData.length>0 ? (<div className="Detailscont">
             <div className="Details">
-               <CustomizedTables studentData = { studentData }/>
+               <CustomizedTables dept = { deptName }  studentData = { studentData }/>
                {/* <StickyHeadTable /> */}
             </div>
         </div>):
