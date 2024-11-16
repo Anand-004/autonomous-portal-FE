@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Button } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -6,8 +6,8 @@ import pdf from './../../pdfs/ogfte.pdf';
 import { Download } from '@mui/icons-material';
 import { blue } from '@mui/material/colors';
 
-const PDFGenerator = ({ dept, receiptData, allReceiptData }) => {
-  useEffect(()=>{ console.log(dept) },[dept])
+const PDFGenerator = ({ dept, receiptData, allReceiptData, btnContent }) => {
+
   // Function to create a single student's PDF
   const createPDFForStudent = async (student) => {
     console.log(student)
@@ -78,8 +78,13 @@ const PDFGenerator = ({ dept, receiptData, allReceiptData }) => {
       page.drawText(`${student.arrears}` || "", { x: 160, y: 233, size: fontSize,font, color });
   
       // Add subjects
-      let subjectYPosition = 615;
+      let subjectYPosition = 680;
+      let subjectXPosition = 32;
       student.subjects.forEach((subject) => {
+        // if(subjectYPosition > 1000) {  
+        //   subjectXPosition = 70;
+        //   subjectYPosition = 680;
+        // }
         page.drawText(
           `0${subject.semester}                ${subject.code}                            ${subject.title}`,
           { x: 53, y: subjectYPosition, size: fontSize, font, color }
@@ -150,7 +155,14 @@ const PDFGenerator = ({ dept, receiptData, allReceiptData }) => {
      document.body.removeChild(anchor);
   };
 
-
+  const toIndianCurrency = (num) => {
+   const curr = num.toLocaleString('en-IN', {
+      // style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
+   });
+return curr;
+};
 
   
 
@@ -160,12 +172,12 @@ const PDFGenerator = ({ dept, receiptData, allReceiptData }) => {
       <Button onClick={handleGeneratePDF} variant="none" >
         <div style={{display:"flex"}}>
           <span style={{ marginRight: "20px" }}><DescriptionIcon  sx={{ color: blue[500], fontSize: 24, mr: 0 }} /></span>
-          <span style={{ fontFamily:"monospace" }}>{`Rs.${receiptData.totalFees}/-`}</span>
+          <span style={{ fontFamily:"monospace" }}>{`Rs.${toIndianCurrency(receiptData.totalFees)}/-`}</span>
         </div>
       </Button>}
       {allReceiptData && (
-        <Button onClick={handleGeneratePDFs} variant="outlined" style={{ marginLeft: '10px'}}>
-          Download All <Download />
+        <Button onClick={ handleGeneratePDFs } variant="outlined" style={{ marginLeft: '10px'}}>
+          { btnContent } <Download />
         </Button>
       )}
     </>
