@@ -13,31 +13,82 @@ import LinearIndeterminate from '../assets/components/loading'
 
 const HomePage = () => {
   const [dept, setDept] = useState('')
+  const [deptName, setDeptName] = useState('')
   const [batch, setBatch] = useState('')
   const [bothSelected, setBothSelected] = useState(true)
   const [isLoad, setIsLoad] = useState(false)
-  
+  const [invalid, setInvalid] = useState([])
+
+  useEffect(()=>{
+    console.log("invalid", invalid)
+  },[invalid])
+
   const excelDateToJSDate = (serial) => {
+    console.log(serial)
     const epoch = new Date(Date.UTC(1900, 0, 1)); // Excel's start date is January 1, 1900
     return new Date(epoch.getTime() + (serial - 2) * 86400000); // Subtract 2 because Excel's epoch starts at 1900
   };
 
   const formatDateToDDMMYYYY = (date) => {
+    console.log(date)
+    if (!date) return "-"
     const day = String(date.getDate()).padStart(2, '0'); // Ensure 2 digits for day
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2 digits for month (0-based index)
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
 
+  const formatName = (name) => {
+    if (typeof name === 'string' && name.trim().length > 1) {
+      let str = name.split('.')
+      while(str[0].length <= 2){
+        const init = str.shift()
+        str.push(init)
+      }
+      const newName = str.join(' ')
+      return newName.trim().toUpperCase(); // return uppercased valid name
+    } else {
+      setInvalid((prevInvalid) => [
+        ...prevInvalid,
+        {
+          field: "name",
+          data: name
+        }
+      ]);
+      return "Invalid name"; // More descriptive error message
+    }
+  };
+  
+  const formatRegNo = (regNo) => {
+    console.log(typeof regNo, regNo);
+    
+    // Check if regNo is either a number or a string and ensure the length is 12
+    const regNoStr = regNo.toString().trim(); // convert to string and trim spaces
+    
+    if (regNoStr.length === 12 && !isNaN(regNoStr)) {
+      return parseInt(regNoStr); // valid reg number as string
+    } else {
+      setInvalid((prevInvalid) => [
+        ...prevInvalid,
+        {
+          field: "Register Number",
+          data: regNo
+        }
+      ]);
+      return parseInt(regNoStr)
+    }
+  };
+  
+  
   function convertStudentData(dataList) {
     const validPaperTypes = ["U", "UA", "Y"]
     return dataList.map(studentData => {
-        const SerialToDate = excelDateToJSDate(studentData["DOB"])
+        const SerialToDate = studentData["DOB"] ? excelDateToJSDate(studentData["DOB"] ) : null
         // console.log(studentData)
         const studentConverted = {
-            reg_no: studentData["Reg. Number"],
-            name: studentData["Name of the Student"],
-            dob: formatDateToDDMMYYYY(SerialToDate),
+            reg_no: formatRegNo(studentData["Reg. Number"]),
+            name: formatName(studentData["Name of the Student"]),
+            dob: SerialToDate ?  formatDateToDDMMYYYY(SerialToDate) : "-",
             papers: []
         };
 
@@ -57,12 +108,33 @@ const HomePage = () => {
     });
   }
 
+  function checkSubName(name){
+    console.log(name)
+    if ( typeof(name) === 'string' && name.length > 0 && !(name.includes("EMPTY")) ){
+      let str = name.split(' ');
+      for(let i=0; i<str.length; i++){
+        str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+      }
+      return str.join(' '); 
+    }else{
+      setInvalid((prevInvalid) => [
+        ...prevInvalid,
+        {
+          field: "Subject Number",
+          data: name
+        }
+      ]);
+      return "subject name"
+    }
+  }
+
   function formatSemAndSub(obj) {
     const result = [];
     let currentSem = null;
     let currentSubjects = [];
-
+    console.log(obj)
     for (let key in obj) {
+      console.log(key)
         if (key.startsWith('SEM')) {
           
             if (currentSem !== null) {
@@ -73,7 +145,7 @@ const HomePage = () => {
             currentSubjects = [];
         } else {
 
-            currentSubjects.push({ code: key, name: obj[key] });
+            currentSubjects.push({ code: key, name: checkSubName(obj[key]) });
         }
     }
 
@@ -89,6 +161,8 @@ const HomePage = () => {
     console
     const semData = formatSemAndSub(data.shift())
     const studentData = convertStudentData(data)
+    console.log(invalid)
+    if(invalid.length>1) console.log(invalid)
     return{
       semesters: semData,
       students: studentData
@@ -131,7 +205,7 @@ const HomePage = () => {
         </div>
         <div className="Filter">
            <div className="Filterleft">
-           <BasicSelect updateDept={setDept} updateBatch={setBatch}/>
+           <BasicSelect updateDept={setDept} setDeptName = { setDeptName } updateBatch={setBatch}/>
            </div>
            <div className="Filterright">
            <DisableElevation handleFilter={ handleFilter } isDisabled={bothSelected}/>
@@ -143,7 +217,7 @@ const HomePage = () => {
 
         {studentData.length>0 ? (<div className="Detailscont">
             <div className="Details">
-               <CustomizedTables studentData = { studentData }/>
+               <CustomizedTables dept = { deptName }  studentData = { studentData }/>
                {/* <StickyHeadTable /> */}
             </div>
         </div>):

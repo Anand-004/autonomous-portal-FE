@@ -39,7 +39,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const CustomizedTables = ({ studentData }) => {
+const CustomizedTables = ({ dept, studentData }) => {
   const [rows, setRows] = useState([]);
   useEffect(()=>{
     console.log("data - ", studentData)
@@ -49,7 +49,7 @@ const CustomizedTables = ({ studentData }) => {
     name: data.name,
     regNo: data.reg_no,
     dob: data.dob ? data.dob : '07/05/2005',
-    totalFees: data.papers.reduce((total, item) => total + parseFloat(item.paper.paper_cost), 0),
+    totalFees: data.papers.reduce((total, item) => total + parseFloat(item.paper.paper_cost), 100),
     subjects: data.papers.map((paperObj) => ({
       semester: paperObj.paper.sem_no,
       code: paperObj.paper.code.includes('T+L') ? paperObj.paper.code.slice(0, 6) : paperObj.paper.code,
@@ -119,6 +119,7 @@ const CustomizedTables = ({ studentData }) => {
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   <PDFGenerator
+                    dept = { dept }
                     id={row.id}
                     receiptData={formatReceiptData(studentData.find((student) => student._id === row.id))}
                   />

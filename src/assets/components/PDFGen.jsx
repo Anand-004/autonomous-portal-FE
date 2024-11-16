@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Button } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -6,7 +6,8 @@ import pdf from './../../pdfs/ogfte.pdf';
 import { Download } from '@mui/icons-material';
 import { blue } from '@mui/material/colors';
 
-const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
+const PDFGenerator = ({ dept, receiptData, allReceiptData }) => {
+  useEffect(()=>{ console.log(dept) },[dept])
   // Function to create a single student's PDF
   const createPDFForStudent = async (student) => {
     console.log(student)
@@ -22,7 +23,7 @@ const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
 
     // Populate the dynamic fields on the PDF for the student
     firstPage.drawText(`${student.name}`, { x: 130, y: 674, size: fontSize, font, color });
-    firstPage.drawText(`B.E.Computer Science And Engineering`, { x: 130, y: 674-12, size: fontSize, font, color });
+    firstPage.drawText(`B.E.${dept.department}`, { x: 130, y: 674-12, size: fontSize, font, color });
 
     firstPage.drawText(`${student.regNo}`, { x: 455, y: yPosition + 12, size: fontSize, font, color });
     firstPage.drawText(`${student.dob}`, { x: 455, y: yPosition, size: fontSize, font, color });
@@ -152,7 +153,10 @@ const PDFGenerator = ({ id, receiptData, allReceiptData }) => {
     <>
     {receiptData&&
       <Button onClick={handleGeneratePDF} variant="none" >
-        <DescriptionIcon  sx={{ color: 'black', fontSize: 24, mr: 0 }} />
+        <div style={{display:"flex"}}>
+          <span style={{ marginRight: "20px" }}><DescriptionIcon  sx={{ color: blue[500], fontSize: 24, mr: 0 }} /></span>
+          <span style={{ fontFamily:"monospace" }}>{`Rs.${receiptData.totalFees}/-`}</span>
+        </div>
       </Button>}
       {allReceiptData && (
         <Button onClick={handleGeneratePDFs} variant="outlined" style={{ marginLeft: '10px'}}>
