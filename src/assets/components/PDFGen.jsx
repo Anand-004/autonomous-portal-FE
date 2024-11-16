@@ -64,21 +64,25 @@ const PDFGenerator = ({ dept, receiptData, allReceiptData }) => {
     for (const student of students) {
       const [templatePage] = await pdfDoc.copyPages(pdfDoc, [0]); // Create a fresh copy of the template page
       const page = pdfDoc.addPage(templatePage); // Add the copied page to the document
-      let yPosition = 733; // Initial y-position for student data
+      let yPosition = 670; // Initial y-position for student data
   
       // Populate the dynamic fields on the PDF for each student
-      page.drawText(student.name || "", { x: 110, y: yPosition, size: fontSize, font, color });
+      page.drawText(student.name || "", { x: 130, y: 674, size: fontSize, font, color });
+      page.drawText(`B.E.${dept?.department}` || "", { x: 130, y: 674-12, size: fontSize, font, color });
+
       page.drawText(`${student.regNo}` || "", { x: 455, y: yPosition + 12, size: fontSize, font, color });
-      page.drawText(student.dob || "", { x: 455, y: yPosition, size: fontSize, font, color });
-      page.drawText(`Rs.${student.totalFees || 0}`, { x: 430, y: 100, size: fontSize, font, color });
-      page.drawText(`${student.arrears}` || "", { x: 160, y: 100, size: fontSize, font, color });
+      page.drawText(student.dob || "",  { x: 455, y: yPosition, size: fontSize, font, color });
+      page.drawText(`2021` || "", { x: 455, y: yPosition - 12, size: fontSize, font, color });
+
+      page.drawText(`Rs.${student.totalFees || 0}`, { x: 430, y: 233, size: 9,font, color });
+      page.drawText(`${student.arrears}` || "", { x: 160, y: 233, size: fontSize,font, color });
   
       // Add subjects
-      let subjectYPosition = 680;
+      let subjectYPosition = 615;
       student.subjects.forEach((subject) => {
         page.drawText(
-          `0${subject.semester}          ${subject.code}         ${subject.title}`,
-          { x: 32, y: subjectYPosition, size: fontSize, font, color }
+          `0${subject.semester}                ${subject.code}                            ${subject.title}`,
+          { x: 53, y: subjectYPosition, size: fontSize, font, color }
         );
         subjectYPosition -= 15;
       });
@@ -113,7 +117,8 @@ const PDFGenerator = ({ dept, receiptData, allReceiptData }) => {
     anchor.href = url;
     anchor.download = 'All_Students_Receipts.pdf'; // Set your desired filename here
     document.body.appendChild(anchor);
-    anchor.click();
+    // anchor.click();
+     window.open(url, '_blank');
 
     // Clean up by revoking the object URL and removing the anchor
     URL.revokeObjectURL(url);
