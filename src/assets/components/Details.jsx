@@ -40,12 +40,27 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const CustomizedTables = ({ dept, studentData }) => {
+  const [classFees, setClassFees] = useState(null); 
+  const [allReceiptData, setAllReceiptData] = useState([]); 
+
+  useEffect(() => {
+    // Format the receipt data
+    const formattedData = (studentData && studentData.length > 0) ? studentData.map((student) => formatReceiptData(student)) : [];
+    setAllReceiptData(formattedData);
+  }, [studentData]);
+
+  useEffect(() => {
+    // Once allReceiptData is updated, calculate the total fees
+    const fees = allReceiptData?.reduce((tot, std) => tot + parseFloat(std.totalFees || 0), 0);
+    setClassFees(toIndianCurrency(fees)); // Make sure we handle cases where fees might be undefined
+  }, [allReceiptData]);
+
   const [rows, setRows] = useState([]);
   useEffect(()=>{
     console.log("data - ", studentData)
   },[studentData])
   // Format the data for PDF generation
-  const formatReceiptData = (data) => ({
+  const formatReceiptData = (data) => (data && {
     name: data.name,
     regNo: data.reg_no,
     dob: data.dob ? data.dob : '07/05/2005',
@@ -57,7 +72,14 @@ const CustomizedTables = ({ dept, studentData }) => {
     })),
     arrears: data.papers.length,
   });
-
+  const toIndianCurrency = (num) => {
+    const curr = num.toLocaleString('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        maximumFractionDigits: 0
+      });
+  return curr;
+  };
   useEffect(() => {
     const processedData = studentData.map((student) => ({
       id: student._id,
@@ -77,16 +99,28 @@ const CustomizedTables = ({ dept, studentData }) => {
 
   return (
     <>
-    <div style={downBtn}>
-        <PDFGenerator
-          allReceiptData={studentData.map((student) => formatReceiptData(student))}
-        />
+    {(studentData && classFees) && 
+    (<div>
+    <div style={{ padding: "30px", display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+
+      {classFees && 
+      <div>
+        <span style={{fontWeight: "bold"}} >Total fees : Rs. {classFees} /-</span>
+      </div>}
+
+      <div style={{}}>
+          <PDFGenerator
+            allReceiptData={ allReceiptData } btnContent={ "All Haltickets" }
+            />
+          <PDFGenerator
+            allReceiptData={ allReceiptData } btnContent={ "All Receipts" }
+            />
       </div>
-      <div style={downBtn}>
-        <PDFGenerator
-          allReceiptData={studentData.map((student) => formatReceiptData(student))}
-        />
-      </div>
+
+      {/* <div style={downBtn}>
+      </div> */}
+
+    </div>
       <TableContainer
         component={Paper}
         elevation={3}
@@ -94,7 +128,7 @@ const CustomizedTables = ({ dept, studentData }) => {
           boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
           borderRadius: '8px',
         }}
-      >
+        >
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -115,7 +149,7 @@ const CustomizedTables = ({ dept, studentData }) => {
                   <PDFGenh
                     id={row.id}
                     receiptData={formatReceiptData(studentData.find((student) => student._id === row.id))}
-                  />
+                    />
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   <PDFGenerator
@@ -129,6 +163,7 @@ const CustomizedTables = ({ dept, studentData }) => {
           </TableBody>
         </Table>
       </TableContainer>
+    </div>)}
     </>
   );
 };
