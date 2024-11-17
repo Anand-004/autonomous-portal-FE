@@ -7,7 +7,6 @@ import { Download } from '@mui/icons-material';
 import { blue } from '@mui/material/colors';
 
 const PDFGenerator = ({ dept, receiptData, allReceiptData, btnContent }) => {
-
   // Function to create a single student's PDF
   const createPDFForStudent = async (student) => {
     console.log(student)
@@ -71,7 +70,7 @@ const PDFGenerator = ({ dept, receiptData, allReceiptData, btnContent }) => {
   
       // Populate the dynamic fields on the PDF for each student
       page.drawText(student.name || "", { x: 130, y: 674, size: fontSize, font, color });
-      page.drawText(`B.E.${student.department}` , { x: 130, y: 674-12, size: fontSize, font, color });
+      page.drawText(`B.E.${dept?.department}` , { x: 130, y: 674-12, size: fontSize, font, color });
 
       page.drawText(`${student.regNo}` || "", { x: 455, y: yPosition + 12, size: fontSize, font, color });
       page.drawText(student.dob || "",  { x: 455, y: yPosition, size: fontSize, font, color });
