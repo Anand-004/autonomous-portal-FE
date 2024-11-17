@@ -52,8 +52,10 @@ const PDFGenerator = ({ dept, receiptData, allReceiptData, btnContent }) => {
     return pdfBytes;
   };
 
+  
   // For all students
-  const createPDFForStudents = async (students) => {
+  const createPDFForStudents = async (students,department) => {
+    
     const templateBytes = await fetch(pdf).then((res) => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(templateBytes);
     const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
@@ -62,13 +64,14 @@ const PDFGenerator = ({ dept, receiptData, allReceiptData, btnContent }) => {
   
     // Loop over each student to create a page for each with individual data
     for (const student of students) {
+      
       const [templatePage] = await pdfDoc.copyPages(pdfDoc, [0]); // Create a fresh copy of the template page
       const page = pdfDoc.addPage(templatePage); // Add the copied page to the document
       let yPosition = 670; // Initial y-position for student data
   
       // Populate the dynamic fields on the PDF for each student
       page.drawText(student.name || "", { x: 130, y: 674, size: fontSize, font, color });
-      page.drawText(`B.E.${dept?.department}` || "", { x: 130, y: 674-12, size: fontSize, font, color });
+      page.drawText(`B.E.${student.department}` , { x: 130, y: 674-12, size: fontSize, font, color });
 
       page.drawText(`${student.regNo}` || "", { x: 455, y: yPosition + 12, size: fontSize, font, color });
       page.drawText(student.dob || "",  { x: 455, y: yPosition, size: fontSize, font, color });
@@ -78,7 +81,7 @@ const PDFGenerator = ({ dept, receiptData, allReceiptData, btnContent }) => {
       page.drawText(`${student.arrears}` || "", { x: 160, y: 233, size: fontSize,font, color });
   
       // Add subjects
-      let subjectYPosition = 680;
+      let subjectYPosition = 615;
       let subjectXPosition = 32;
       student.subjects.forEach((subject) => {
         // if(subjectYPosition > 1000) {  
@@ -137,7 +140,7 @@ const PDFGenerator = ({ dept, receiptData, allReceiptData, btnContent }) => {
       return;
     }
 
-    const pdfBytes = await createPDFForStudent(receiptData);
+    const pdfBytes = await createPDFForStudent(receiptData,dept);
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
 

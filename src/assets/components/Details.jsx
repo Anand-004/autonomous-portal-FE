@@ -109,7 +109,7 @@ const CustomizedTables = ({ dept, studentData }) => {
       </div>}
 
       <div style={{}}>
-          <PDFGenerator
+          <PDFGenh
             allReceiptData={ allReceiptData } btnContent={ "All Haltickets" }
             />
           <PDFGenerator
