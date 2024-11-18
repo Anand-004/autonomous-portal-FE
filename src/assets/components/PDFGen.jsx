@@ -53,7 +53,7 @@ const PDFGenerator = ({ dept, receiptData, allReceiptData, btnContent }) => {
 
   
   // For all students
-  const createPDFForStudents = async (students,department) => {
+  const createPDFForStudents = async (students) => {
     
     const templateBytes = await fetch(pdf).then((res) => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(templateBytes);

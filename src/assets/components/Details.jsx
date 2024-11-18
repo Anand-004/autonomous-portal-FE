@@ -151,6 +151,7 @@ const CustomizedTables = ({ dept, studentData }) => {
                 </StyledNameCell>
                 <StyledTableCell align="center">
                   <PDFGenh
+                    dept = { dept }
                     id={row.id}
                     receiptData={formatReceiptData(studentData.find((student) => student._id === row.id))}
                     />

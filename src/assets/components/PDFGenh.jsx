@@ -7,7 +7,7 @@ import { Download } from '@mui/icons-material';
 import { blue } from '@mui/material/colors';
 import ArticleIcon from '@mui/icons-material/Article';
 
-const PDFGenh = ({ id, receiptData, allReceiptData }) => {
+const PDFGenh = ({ dept, receiptData, allReceiptData }) => {
    // Function to create a single student's PDF
    const createPDFForStudent = async (student) => {
     console.log(student)
@@ -23,7 +23,7 @@ const PDFGenh = ({ id, receiptData, allReceiptData }) => {
 
     // Populate the dynamic fields on the PDF for the student
     firstPage.drawText(`${student.name}`, { x: 100, y: 706, size: fontSize, font, color });
-    firstPage.drawText(`B.E.Computer Science And Engineering`, { x: 310, y: 706-18 , size: fontSize, font, color });
+    firstPage.drawText(`B.E.${dept.department}`,{ x: 310, y: 706-18 , size: fontSize, font, color });
 
     firstPage.drawText(`${student.regNo}`, { x: 310, y: 706, size: fontSize, font, color });
     firstPage.drawText(`${student.dob}`, { x: 100, y: 670, size: fontSize, font, color });
@@ -68,7 +68,7 @@ const PDFGenh = ({ id, receiptData, allReceiptData }) => {
   
       // Populate the dynamic fields on the PDF for each student
    page.drawText(`${student.name}`, { x: 100, y: 706, size: fontSize, font, color });
-   page.drawText(`B.E.Computer Science And Engineering`, { x: 310, y: 706-18 , size: fontSize, font, color });
+   page.drawText(`B.E.${dept?.department}` , { x: 310, y: 706-18 , size: fontSize, font, color });
 
    page.drawText(`${student.regNo}`, { x: 310, y: 706, size: fontSize, font, color });
    page.drawText(`${student.dob}`, { x: 100, y: 670, size: fontSize, font, color });
@@ -115,7 +115,9 @@ const PDFGenh = ({ id, receiptData, allReceiptData }) => {
     anchor.href = url;
     anchor.download = 'All_Students_Receipts.pdf'; // Set your desired filename here
     document.body.appendChild(anchor);
-    anchor.click();
+    // anchor.click();
+    window.open(url, '_blank');
+
 
     // Clean up by revoking the object URL and removing the anchor
     URL.revokeObjectURL(url);
