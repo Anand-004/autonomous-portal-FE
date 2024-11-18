@@ -7,16 +7,16 @@ import { Download } from '@mui/icons-material';
 import { blue } from '@mui/material/colors';
 
 const PDFGenerator = ({ dept, receiptData, allReceiptData, btnContent }) => {
-  const BE_DEPARTMENTS = [
-    'Agriculture and Engineering',
-    'Artificial Intelligence and Data Science',
-    // Add more departments as needed
-  ];
+  // const BE_DEPARTMENTS = [
+  //   'Agriculture and Engineering',
+  //   'Artificial Intelligence and Data Science',
+  //   // Add more departments as needed
+  // ];
 
-  // Function to determine the prefix (B.E or B.Tech) based on department
-  const getDegreePrefix = (department) => {
-    return BE_DEPARTMENTS.includes(department) ? 'B.Tech' : 'B.E';
-  };
+  // // Function to determine the prefix (B.E or B.Tech) based on department
+  // const getDegreePrefix = (department) => {
+  //   return BE_DEPARTMENTS.includes(department) ? 'B.Tech' : 'B.E';
+  // };
 
   // Function to create a single student's PDF
   const createPDFForStudent = async (student) => {
@@ -32,12 +32,12 @@ const PDFGenerator = ({ dept, receiptData, allReceiptData, btnContent }) => {
     let yPosition = 670; // Initial y-position for student data
     
 
-    const degreePrefix = getDegreePrefix(dept.department);
+    // const degreePrefix = getDegreePrefix(dept.department);
 
 
     // Populate the dynamic fields on the PDF for the student
     firstPage.drawText(`${student.name}`, { x: 130, y: 674, size: fontSize, font, color });
-    firstPage.drawText(`${degreePrefix}.${dept.department}`, { x: 130, y: 674-12, size: fontSize, font, color });
+    firstPage.drawText(`${dept.degree}.${dept.department}`, { x: 130, y: 674-12, size: fontSize, font, color });
 
     firstPage.drawText(`${student.regNo}`, { x: 455, y: yPosition + 12, size: fontSize, font, color });
     firstPage.drawText(`${student.dob}`, { x: 455, y: yPosition, size: fontSize, font, color });
@@ -89,11 +89,11 @@ const PDFGenerator = ({ dept, receiptData, allReceiptData, btnContent }) => {
       const page = pdfDoc.addPage(templatePage); // Add the copied page to the document
       let yPosition = 670; // Initial y-position for student data
   
-      const degreePrefix = getDegreePrefix(dept.department);
+      // const degreePrefix = getDegreePrefix(dept.department);
 
       // Populate the dynamic fields on the PDF for each student
       page.drawText(student.name || "", { x: 130, y: 674, size: fontSize, font, color });
-      page.drawText(degreePrefix, { x: 130, y: 674-12, size: fontSize, font, color });
+      page.drawText(dept.degree , { x: 130, y: 674-12, size: fontSize, font, color });
 
       page.drawText(`${dept?.department}` , { x: 140, y: 674-12, size: fontSize, font, color });
 

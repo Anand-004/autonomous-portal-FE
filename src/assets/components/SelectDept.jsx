@@ -7,84 +7,125 @@ import FormHelperText from '@mui/material/FormHelperText';
 import { useEffect, useState } from 'react';
 import { fetchDepartments } from '../../services/api/main';
 
-export default function BasicSelect( {updateDept, updateBatch, setDeptName} ) {
-  const [depts, setDepts] = useState([]);
-  const [batches, setBatches] = useState(
-    [
-      "2021",
-      "2022",
-      "2023",
-      "2024",
-    ]
-  );
+export default function BasicSelect({ updateDept, updateBatch, setDeptName }) {
+  const [depts, setDepts] = useState([]); // All departments from API
+  const [filteredDepts, setFilteredDepts] = useState([]); // Departments after degree filter
+  const [batches, setBatches] = useState(["2021", "2022", "2023", "2024"]);
   const [selectedDept, setSelectedDept] = useState('');
   const [selectedBatch, setSelectedBatch] = useState('');
-  const fetchDatas = async()=>{
+  const [selectedDegree, setSelectedDegree] = useState('');
+  
+  const degrees = ["B.E", "B.Tech", "M.E", "M.Tech"]; // Hardcoded degrees
+
+  // Fetch the departments from the API
+  const fetchDatas = async () => {
     const depts = await fetchDepartments();
-    // console.log(depts)
-    setDepts(depts.departments)
-    
-    // const data = await fetchBatches();
-    // console.log(data.batches)
-    // setBatches(data.batches)
-  }
-  useEffect(()=>{
-    fetchDatas()
-  }, [])
+    setDepts(depts.departments);
+    setFilteredDepts(depts.departments); // Initially show all departments
+  };
+
+  useEffect(() => {
+    fetchDatas();
+  }, []);
+
+  // Filter departments when the degree is selected
+  useEffect(() => {
+    if (selectedDegree) {
+      const filtered = depts.filter(dept => dept.degree === selectedDegree);
+      setFilteredDepts(filtered);
+      setSelectedDept(''); // Reset department selection
+      setDeptName(null); // Reset department name
+    } else {
+      setFilteredDepts(depts); // Show all departments if no degree is selected
+    }
+  }, [selectedDegree, depts]);
+
+  // Handle degree change
+  const handleDegreeChange = (event) => {
+    setSelectedDegree(event.target.value);
+  };
+
+  // Handle department change
   const handleDeptChange = (event) => {
     setSelectedDept(event.target.value);
     updateDept(event.target.value);
-    const dName = depts.find( itm => itm._id === event.target.value)
-    // console.log(depts, selectedDept, dName)
-    setDeptName(dName)
+    const dName = depts.find(itm => itm._id === event.target.value);
+    setDeptName(dName);
   };
+
+  // Handle batch change
   const handleBatchChange = (event) => {
     setSelectedBatch(event.target.value);
-    updateBatch(event.target.value)
+    updateBatch(event.target.value);
   };
 
   return (
     <>
-       <Box sx={{ minWidth: 120 }}>
-      <FormControl sx={{ m: 1, minWidth: 500 }} >
-        <InputLabel id="Department">Department</InputLabel>
-        <Select
-          labelId="Department"
-          id="Dept"
-          value={selectedDept}
-          label="Department"
-          onChange={handleDeptChange}
-        >
-          {depts?.map( (item) => {
-            return(
-              <MenuItem key={item._id} value={item._id}>{item.department}</MenuItem>
-            )
-          })}
-        </Select>
-        <FormHelperText>Required*</FormHelperText>
-      </FormControl>
-      
-    </Box>
-    <Box sx={{ minWidth: 120 }}>
-    <FormControl sx={{ m: 1, minWidth: 300 }} >
-      <InputLabel id="StudentBatch">Batch</InputLabel>
-      <Select
-        labelId="StudentBatch"
-        id="Batch"
-        value={selectedBatch}
-        label="Department"
-        onChange={handleBatchChange}
-      >
-        {batches.map( (item, ind) => {
-            return(
-              <MenuItem key={ind} value={item}>{item}</MenuItem>
-            )
-          })}
-      </Select>
-      <FormHelperText>Required*</FormHelperText>
-    </FormControl>
-  </Box>
-  </>
-  
+    <div style={{display: "flex", marginLeft: "5%"}}>
+      {/* Degree Selection */}
+      <Box sx={{ minWidth: 80 }}>
+        <FormControl sx={{ m: 1, minWidth: 300 }}>
+          <InputLabel id="Degree">Degree</InputLabel>
+          <Select
+            labelId="Degree"
+            id="Degree"
+            value={selectedDegree}
+            label="Degree"
+            onChange={handleDegreeChange}
+          >
+            {degrees.map((degree, index) => (
+              <MenuItem key={index} value={degree}>
+                {degree}
+              </MenuItem>
+            ))}
+          </Select>
+          <FormHelperText>Required*</FormHelperText>
+        </FormControl>
+      </Box>
+
+      {/* Department Selection */}
+      <Box sx={{ minWidth: 120 }}>
+        <FormControl sx={{ m: 1, minWidth: 500 }}>
+          <InputLabel id="Department">Department</InputLabel>
+          <Select
+            labelId="Department"
+            id="Dept"
+            value={selectedDept}
+            label="Department"
+            onChange={handleDeptChange}
+            disabled={!selectedDegree} // Disable if no degree selected
+            >
+            {filteredDepts.map((item) => (
+              <MenuItem key={item._id} value={item._id}>
+                {item.department}
+              </MenuItem>
+            ))}
+          </Select>
+          <FormHelperText>Required*</FormHelperText>
+        </FormControl>
+      </Box>
+
+      {/* Batch Selection */}
+      <Box sx={{ minWidth: 120 }}>
+        <FormControl sx={{ m: 1, minWidth: 300 }}>
+          <InputLabel id="StudentBatch">Batch</InputLabel>
+          <Select
+            labelId="StudentBatch"
+            id="Batch"
+            value={selectedBatch}
+            label="Batch"
+            onChange={handleBatchChange}
+            >
+            {batches.map((item, ind) => (
+              <MenuItem key={ind} value={item}>
+                {item}
+              </MenuItem>
+            ))}
+          </Select>
+          <FormHelperText>Required*</FormHelperText>
+        </FormControl>
+      </Box>
+    </div>
+    </>
   );
 }
