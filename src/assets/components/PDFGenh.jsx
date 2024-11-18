@@ -3,14 +3,30 @@ import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Button } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
 import pdf from './../../pdfs/hallticket.pdf';
-import { Download } from '@mui/icons-material';
+import { Download, FirstPage } from '@mui/icons-material';
 import { blue } from '@mui/material/colors';
 import ArticleIcon from '@mui/icons-material/Article';
 
 const PDFGenh = ({ dept, receiptData, allReceiptData }) => {
    // Function to create a single student's PDF
-   const createPDFForStudent = async (student) => {
-    console.log(student)
+   const BE_DEPARTMENTS = [
+    'Agriculture and Engineering',
+    'Artificial Intelligence and Data Science',
+    // Add more departments as needed
+  ];
+
+  // Function to determine the prefix (B.E or B.Tech) based on department
+  const getDegreePrefix = (department) => {
+    return BE_DEPARTMENTS.includes(department) ? 'B.Tech' : 'B.E';
+  };
+
+  // Function to create a single student's PDF
+  const createPDFForStudent = async (student) => {
+    if (!dept) {
+      console.warn('Department data is not available.');
+      return;
+    }
+
     const templateBytes = await fetch(pdf).then((res) => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(templateBytes);
     const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
@@ -21,23 +37,35 @@ const PDFGenh = ({ dept, receiptData, allReceiptData }) => {
     let firstPage = pages[0]; // Use the first page of the template
     let yPosition = 670; // Initial y-position for student data
 
+    // Determine the degree prefix dynamically
+    const degreePrefix = getDegreePrefix(dept.department);
+
     // Populate the dynamic fields on the PDF for the student
     firstPage.drawText(`${student.name}`, { x: 100, y: 706, size: fontSize, font, color });
-    firstPage.drawText(`B.E.${dept.department}`,{ x: 310, y: 706-18 , size: fontSize, font, color });
-
+    firstPage.drawText(degreePrefix, { x: 100, y: 706 - 18, size: fontSize, font, color });
+    firstPage.drawText(`${dept.department}`, { x: 310, y: 706 - 18, size: fontSize, font, color });
     firstPage.drawText(`${student.regNo}`, { x: 310, y: 706, size: fontSize, font, color });
     firstPage.drawText(`${student.dob}`, { x: 100, y: 670, size: fontSize, font, color });
-    // firstPage.drawText(`2021`, { x: 455, y: yPosition - 12, size: fontSize, font, color });
+  // firstPage.drawText(`2021`, { x: 455, y: yPosition - 12, size: fontSize, font, color });
     // firstPage.drawText(`Total Fees : Rs.${student.totalFees}`, { x: 430, y: 233, size: 9,font, color });
     // firstPage.drawText(`No of Subjects: ${student.arrears}`, { x: 160, y: 233, size: fontSize,font, color });
 
     // Add subjects
     let subjectYPosition = 637;
+    let sno = 1;
     student.subjects.forEach((subject) => {
-      firstPage.drawText(
-        `0${subject.semester}                       ${subject.code}                       ${subject.title}`,
-        { x: 80, y: subjectYPosition, size: fontSize, font, color }
-      );
+      if (sno<10) {
+        firstPage.drawText(`  ${sno}`,{ x: 46, y: subjectYPosition, size: fontSize, font, color });
+      }
+      else{
+        firstPage.drawText(`${sno}`,{ x: 46, y: subjectYPosition, size: fontSize, font, color });
+      }
+      // firstPage.drawText(`${sno}`,{ x: 46, y: subjectYPosition, size: fontSize, font, color });
+      firstPage.drawText(`0${subject.semester}`,{ x: 78, y: subjectYPosition, size: fontSize, font, color });
+      firstPage.drawText(`${subject.code}`,{ x: 118, y: subjectYPosition, size: fontSize, font, color });
+      firstPage.drawText(`${subject.title}`,{ x: 173, y: subjectYPosition, size: fontSize, font, color });
+
+      sno=sno+1;
       subjectYPosition -= 10;
     });
 
@@ -65,10 +93,16 @@ const PDFGenh = ({ dept, receiptData, allReceiptData }) => {
       const [templatePage] = await pdfDoc.copyPages(pdfDoc, [0]); // Create a fresh copy of the template page
       const page = pdfDoc.addPage(templatePage); // Add the copied page to the document
       let yPosition = 733; // Initial y-position for student data
+      const degreePrefix = getDegreePrefix(dept.department);
+
   
       // Populate the dynamic fields on the PDF for each student
    page.drawText(`${student.name}`, { x: 100, y: 706, size: fontSize, font, color });
-   page.drawText(`B.E.${dept?.department}` , { x: 310, y: 706-18 , size: fontSize, font, color });
+  //  page.drawText(`B.E` , { x: 100, y: 706-18 , size: fontSize, font, color });
+   page.drawText(degreePrefix, { x: 100, y: 706 - 18, size: fontSize, font, color });
+
+
+   page.drawText(`${dept?.department}` , { x: 310, y: 706-18 , size: fontSize, font, color });
 
    page.drawText(`${student.regNo}`, { x: 310, y: 706, size: fontSize, font, color });
    page.drawText(`${student.dob}`, { x: 100, y: 670, size: fontSize, font, color });
@@ -77,11 +111,20 @@ const PDFGenh = ({ dept, receiptData, allReceiptData }) => {
   
       // Add subjects
       let subjectYPosition = 637;
+      let sno = 1;
+
       student.subjects.forEach((subject) => {
-        page.drawText(
-        `0${subject.semester}                       ${subject.code}                       ${subject.title}`,
-        { x: 80, y: subjectYPosition, size: fontSize, font, color }
-      );
+        if (sno<10) {
+          page.drawText(`  ${sno}`,{ x: 46, y: subjectYPosition, size: fontSize, font, color });
+        }
+        else{
+          page.drawText(`${sno}`,{ x: 46, y: subjectYPosition, size: fontSize, font, color });
+        }
+    page.drawText(`0${subject.semester}`,{ x: 78, y: subjectYPosition, size: fontSize, font, color });
+    page.drawText(`${subject.code}`,{ x: 118, y: subjectYPosition, size: fontSize, font, color });
+    page.drawText(`${subject.title}`,{ x: 173, y: subjectYPosition, size: fontSize, font, color });
+
+      sno=sno+1;
       subjectYPosition -= 10;
       });
   
@@ -161,7 +204,7 @@ const PDFGenh = ({ dept, receiptData, allReceiptData }) => {
       </Button>}
       {allReceiptData && (
         <Button onClick={handleGeneratePDFs} variant="outlined" style={{ marginLeft: '10px' }}>
-          Download All <Download />
+          All Hall Ticket <Download />
         </Button>
       )}
     </>

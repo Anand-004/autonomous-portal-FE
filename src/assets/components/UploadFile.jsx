@@ -36,7 +36,7 @@ export default function InputFileUpload({ sendData, isDisabled }) {
             const worksheet = workbook.Sheets[sheetName];
             const jsonData = XLSX.utils.sheet_to_json(worksheet);
             console.log(jsonData);
-            sendData(jsonData);
++            sendData(jsonData);
           } catch (dataProcessingError) {
             console.error("Error processing data:", dataProcessingError);
             alert("An error occurred while processing the file data.");

@@ -8,8 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import PDFGenerator from './PDFGen';
-import { Button } from '@mui/material';
-import { Download } from '@mui/icons-material';
+// import { Button } from '@mui/material';
+// import { Download } from '@mui/icons-material';
 import PDFGenh from './PDFGenh';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -105,7 +105,7 @@ const CustomizedTables = ({ dept, studentData }) => {
 
       {classFees && 
       <div>
-        <span style={{fontWeight: "bold"}} >Total fees : Rs. {classFees} /-</span>
+        <span style={{fontWeight: "bold",color:'gray'}} >Total fees : Rs. {classFees} /-</span>
       </div>}
 
       <div style={{}}>
