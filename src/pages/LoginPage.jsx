@@ -46,7 +46,7 @@ const LoginPage = () => {
         setIsDisabled(true)
         const data = {
             username: username,
-            password: password
+            password: password,
         }
         const Authenticated = await AdminLogin(data)
 

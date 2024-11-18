@@ -5,6 +5,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import pdf from './../../pdfs/hallticket.pdf';
 import { Download } from '@mui/icons-material';
 import { blue } from '@mui/material/colors';
+import ArticleIcon from '@mui/icons-material/Article';
 
 const PDFGenh = ({ id, receiptData, allReceiptData }) => {
    // Function to create a single student's PDF
@@ -21,23 +22,23 @@ const PDFGenh = ({ id, receiptData, allReceiptData }) => {
     let yPosition = 670; // Initial y-position for student data
 
     // Populate the dynamic fields on the PDF for the student
-    firstPage.drawText(`${student.name}`, { x: 130, y: 674, size: fontSize, font, color });
-    firstPage.drawText(`B.E.Computer Science And Engineering`, { x: 130, y: 674-12, size: fontSize, font, color });
+    firstPage.drawText(`${student.name}`, { x: 100, y: 706, size: fontSize, font, color });
+    firstPage.drawText(`B.E.Computer Science And Engineering`, { x: 310, y: 706-18 , size: fontSize, font, color });
 
-    firstPage.drawText(`${student.regNo}`, { x: 455, y: yPosition + 12, size: fontSize, font, color });
-    firstPage.drawText(`${student.dob}`, { x: 455, y: yPosition, size: fontSize, font, color });
-    firstPage.drawText(`2021`, { x: 455, y: yPosition - 12, size: fontSize, font, color });
-    firstPage.drawText(`Total Fees : Rs.${student.totalFees}`, { x: 430, y: 233, size: 9,font, color });
-    firstPage.drawText(`No of Subjects: ${student.arrears}`, { x: 160, y: 233, size: fontSize,font, color });
+    firstPage.drawText(`${student.regNo}`, { x: 310, y: 706, size: fontSize, font, color });
+    firstPage.drawText(`${student.dob}`, { x: 100, y: 670, size: fontSize, font, color });
+    // firstPage.drawText(`2021`, { x: 455, y: yPosition - 12, size: fontSize, font, color });
+    // firstPage.drawText(`Total Fees : Rs.${student.totalFees}`, { x: 430, y: 233, size: 9,font, color });
+    // firstPage.drawText(`No of Subjects: ${student.arrears}`, { x: 160, y: 233, size: fontSize,font, color });
 
     // Add subjects
-    let subjectYPosition = 615;
+    let subjectYPosition = 637;
     student.subjects.forEach((subject) => {
       firstPage.drawText(
-        `0${subject.semester}                ${subject.code}                            ${subject.title}`,
-        { x: 53, y: subjectYPosition, size: fontSize, font, color }
+        `0${subject.semester}                       ${subject.code}                       ${subject.title}`,
+        { x: 80, y: subjectYPosition, size: fontSize, font, color }
       );
-      subjectYPosition -= 12;
+      subjectYPosition -= 10;
     });
 
     // If the content overflows, add a new page
@@ -66,20 +67,22 @@ const PDFGenh = ({ id, receiptData, allReceiptData }) => {
       let yPosition = 733; // Initial y-position for student data
   
       // Populate the dynamic fields on the PDF for each student
-      page.drawText(student.name || "", { x: 110, y: yPosition, size: fontSize, font, color });
-      page.drawText(`${student.regNo}` || "", { x: 455, y: yPosition + 12, size: fontSize, font, color });
-      page.drawText(student.dob || "", { x: 455, y: yPosition, size: fontSize, font, color });
-      page.drawText(`Rs.${student.totalFees || 0}`, { x: 430, y: 100, size: fontSize, font, color });
-      page.drawText(`${student.arrears}` || "", { x: 160, y: 100, size: fontSize, font, color });
+   page.drawText(`${student.name}`, { x: 100, y: 706, size: fontSize, font, color });
+   page.drawText(`B.E.Computer Science And Engineering`, { x: 310, y: 706-18 , size: fontSize, font, color });
+
+   page.drawText(`${student.regNo}`, { x: 310, y: 706, size: fontSize, font, color });
+   page.drawText(`${student.dob}`, { x: 100, y: 670, size: fontSize, font, color });
+      // page.drawText(`Rs.${student.totalFees || 0}`, { x: 430, y: 100, size: fontSize, font, color });
+      // page.drawText(`${student.arrears}` || "", { x: 160, y: 100, size: fontSize, font, color });
   
       // Add subjects
-      let subjectYPosition = 680;
+      let subjectYPosition = 637;
       student.subjects.forEach((subject) => {
         page.drawText(
-          `0${subject.semester}          ${subject.code}         ${subject.title}`,
-          { x: 32, y: subjectYPosition, size: fontSize, font, color }
-        );
-        subjectYPosition -= 15;
+        `0${subject.semester}                       ${subject.code}                       ${subject.title}`,
+        { x: 80, y: subjectYPosition, size: fontSize, font, color }
+      );
+      subjectYPosition -= 10;
       });
   
       // Adjust for content overflow
@@ -152,7 +155,7 @@ const PDFGenh = ({ id, receiptData, allReceiptData }) => {
     <>
     {receiptData&&
       <Button onClick={handleGeneratePDF} variant="none" >
-        <DescriptionIcon  sx={{ color: blue[500], fontSize: 24, mr: 0 }} />
+        <ArticleIcon  sx={{ color: 'red', fontSize: 24, mr: 0 }} />
       </Button>}
       {allReceiptData && (
         <Button onClick={handleGeneratePDFs} variant="outlined" style={{ marginLeft: '10px' }}>
