@@ -31,12 +31,14 @@
     padding: 2rem;
     margin-top: 80px; /* Push content below the navbar */
     align-items: center;
+    /* background-color: #1976d2; */
   }
   
   .Filterleft {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
+    /* background-color: #333; */
   }
   
   .Filterright {
@@ -45,6 +47,10 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+    /* background-color: #ccc; */
+    padding-left: 150PX;
+    /* height: 70px; */
+    margin-top: 5px;
   }
   
   /* Details and Upload Section */

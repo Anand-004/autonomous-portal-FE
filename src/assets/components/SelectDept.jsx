@@ -15,7 +15,7 @@ export default function BasicSelect({ updateDept, updateBatch, setDeptName }) {
   const [selectedBatch, setSelectedBatch] = useState('');
   const [selectedDegree, setSelectedDegree] = useState('');
   
-  const degrees = ["B.E", "B.Tech", "M.E", "M.Tech"]; // Hardcoded degrees
+  const degrees = ["B.E", "B.Tech", "M.E", "Ph.D"]; // Hardcoded degrees
 
   // Fetch the departments from the API
   const fetchDatas = async () => {
