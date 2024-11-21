@@ -65,6 +65,10 @@ const CustomizedTables = ({ dept, studentData }) => {
     regNo: data.reg_no,
     dob: data.dob ? data.dob : '07/05/2005',
     totalFees: data.papers.reduce((total, item) => total + parseFloat(item.paper.paper_cost), 100),
+    // totalFees: data.papers.reduce((total, item) => {
+    //   console.log("total - ", total, "code - ",item.paper.code, "name - ",item.paper.name, 'Cost-',item.paper.paper_cost);
+    //   return (total + parseFloat(item.paper.paper_cost))
+    // }, 100),
     subjects: data.papers.map((paperObj) => ({
       semester: paperObj.paper.sem_no,
       code: paperObj.paper.code.includes('T+L') ? paperObj.paper.code.slice(0, 6) : paperObj.paper.code,
