@@ -1,0 +1,35 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.Maincontainer{
+    width: 100vw;
+    /* height: 100vh; */
+    background-color: blue;
+    
+}
+
+.attencont{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    color: cadetblue;
+}
+
+.navbar{
+    width: 100%;
+    height: 62px;
+    background-color: aqua;
+}
+
+
+.table{
+    width: 85%;
+    height: 700px;
+    background-color: brown;
+}
