@@ -3,10 +3,10 @@ import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Button } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
 import pdf from './../../pdfs/hallticket.pdf';
-import { Download, FirstPage } from '@mui/icons-material';
+import { Download, FirstPage, Photo } from '@mui/icons-material';
 import { blue } from '@mui/material/colors';
 import ArticleIcon from '@mui/icons-material/Article';
-// import './../photos'
+import photo from './../photos/photo.jpg'
 
 const PDFGenh = ({ dept, receiptData, allReceiptData }) => {
    // Function to create a single student's PDF
@@ -34,13 +34,13 @@ const PDFGenh = ({ dept, receiptData, allReceiptData }) => {
     const fontSize = 5;
     const color = rgb(0, 0, 0);
 
-    const imageBytes = await fetch('./../photos/photo.jpg').then((res) => res.arrayBuffer()); // Adjust the path
+    const imageBytes = await fetch(photo).then((res) => res.arrayBuffer()); // Adjust the path
     const image = await pdfDoc.embedJpg(imageBytes); // Use embedJpg if the image is in JPG format
 
-    const imageWidth = 50;
-  const imageHeight = 50;
-  const imageX = 450; // Adjust the X position
-  const imageY = 700; // Adjust the Y position
+    const imageWidth = 40;
+  const imageHeight = 57;
+  const imageX = 490; // Adjust the X position
+  const imageY = 660; // Adjust the Y position
 
     const pages = pdfDoc.getPages();
     let firstPage = pages[0]; // Use the first page of the template
