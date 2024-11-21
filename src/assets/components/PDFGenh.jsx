@@ -3,7 +3,7 @@ import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Button } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
 import pdf from './../../pdfs/hallticket.pdf';
-import { Download, FirstPage } from '@mui/icons-material';
+import { Download, FirstPage, Photo } from '@mui/icons-material';
 import { blue } from '@mui/material/colors';
 import ArticleIcon from '@mui/icons-material/Article';
 // import photoURL from './../photos/photo.jpeg'
