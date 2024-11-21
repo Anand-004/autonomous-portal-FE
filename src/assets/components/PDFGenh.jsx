@@ -6,6 +6,7 @@ import pdf from './../../pdfs/hallticket.pdf';
 import { Download, FirstPage } from '@mui/icons-material';
 import { blue } from '@mui/material/colors';
 import ArticleIcon from '@mui/icons-material/Article';
+// import photoURL from './../photos/photo.jpeg'
 // import './../photos'
 
 const PDFGenh = ({ dept, receiptData, allReceiptData }) => {
@@ -34,17 +35,28 @@ const PDFGenh = ({ dept, receiptData, allReceiptData }) => {
     const fontSize = 5;
     const color = rgb(0, 0, 0);
 
-    const imageBytes = await fetch('./../photos/photo.jpg').then((res) => res.arrayBuffer()); // Adjust the path
-    const image = await pdfDoc.embedJpg(imageBytes); // Use embedJpg if the image is in JPG format
+    const photoURL = `src/assets/photos/${student.regNo}.jpeg`;
+
+    console.log("Fetching image from:", photoURL);
+    
+    const imageResponse = await fetch(photoURL);
+
+    if (!imageResponse.ok) {
+      console.error('Failed to fetch image. HTTP Status:', imageResponse.status);
+      return;
+    }
+
+    const imageBytes = await imageResponse.arrayBuffer();
+    const image = await pdfDoc.embedJpg(imageBytes);
 
     const imageWidth = 50;
-  const imageHeight = 50;
-  const imageX = 450; // Adjust the X position
-  const imageY = 700; // Adjust the Y position
+    const imageHeight = 50;
+    const imageX = 460; // Adjust the X position
+    const imageY = 665; // Adjust the Y position
 
     const pages = pdfDoc.getPages();
     let firstPage = pages[0]; // Use the first page of the template
-    let yPosition = 670; // Initial y-position for student data
+    // let yPosition = 670; // Initial y-position for student data
 
     // Determine the degree prefix dynamically
     // const degreePrefix = getDegreePrefix(dept.department);
