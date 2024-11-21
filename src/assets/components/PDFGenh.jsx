@@ -6,6 +6,7 @@ import pdf from './../../pdfs/hallticket.pdf';
 import { Download, FirstPage } from '@mui/icons-material';
 import { blue } from '@mui/material/colors';
 import ArticleIcon from '@mui/icons-material/Article';
+// import './../photos'
 
 const PDFGenh = ({ dept, receiptData, allReceiptData }) => {
    // Function to create a single student's PDF
@@ -33,12 +34,27 @@ const PDFGenh = ({ dept, receiptData, allReceiptData }) => {
     const fontSize = 5;
     const color = rgb(0, 0, 0);
 
+    const imageBytes = await fetch('./../photos/photo.jpg').then((res) => res.arrayBuffer()); // Adjust the path
+    const image = await pdfDoc.embedJpg(imageBytes); // Use embedJpg if the image is in JPG format
+
+    const imageWidth = 50;
+  const imageHeight = 50;
+  const imageX = 450; // Adjust the X position
+  const imageY = 700; // Adjust the Y position
+
     const pages = pdfDoc.getPages();
     let firstPage = pages[0]; // Use the first page of the template
     let yPosition = 670; // Initial y-position for student data
 
     // Determine the degree prefix dynamically
     // const degreePrefix = getDegreePrefix(dept.department);
+
+    firstPage.drawImage(image, {
+      x: imageX,
+      y: imageY,
+      width: imageWidth,
+      height: imageHeight,
+    });
 
     // Populate the dynamic fields on the PDF for the student
     firstPage.drawText(`${student.name}`, { x: 100, y: 706, size: fontSize, font, color });

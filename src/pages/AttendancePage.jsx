@@ -7,7 +7,7 @@ const AttendancePage = () => {
         <div className="navbar"></div>
         <div className="attencont">
                 <div className="table"></div>
-                        </div>
+                </div>
     </div>
   )
 }
