@@ -4,32 +4,84 @@
     box-sizing: border-box;
 }
 
-.Maincontainer{
+.attencont{
     width: 100vw;
-    /* height: 100vh; */
-    background-color: blue;
-    
+    min-height: 100vh;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
 }
 
-.attencont{
+.navdiv{
+    width:100%;
+}
+
+.filterdiv{
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
-    margin-top: 50px;
-    color: cadetblue;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    
 }
 
-.navbar{
-    width: 100%;
-    height: 62px;
-    background-color: aqua;
-}
-
-
-.table{
+.filtertopdiv{
     width: 85%;
-    height: 700px;
-    background-color: brown;
+    /* background-color: aquamarine; */
+    display: flex;
+    justify-content: space-evenly;
 }
+
+/* .filterdowndiv{
+    width: 85%;
+    background-color: bisque;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.fielddiv{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+} */
+
+/* Define custom styles for the button */
+.customButton {
+    background-color: #1976d2; /* Default background color */
+    color: white; /* Default text color */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    height: 40px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+  }
+  .buttondiv{
+    margin-top: 15px;
+    margin-left: 450px;
+  }
+  
+  .customButton:hover {
+    background-color: white; /* Hover background color */
+    color: #1976d2; /* Hover text color */
+  }
+
+  .togglediv{
+    width: 100%;
+    /* background-color: aliceblue; */
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+  }
+
+  .iframediv{
+    width: 80%;
+    background-color: aqua;
+    min-height: 700px;
+  }
+  
