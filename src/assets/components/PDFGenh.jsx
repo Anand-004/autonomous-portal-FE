@@ -35,38 +35,74 @@ const PDFGenh = ({ dept, receiptData, allReceiptData }) => {
     const fontSize = 5;
     const color = rgb(0, 0, 0);
 
-    const photoURL = `src/assets/photos/${student.regNo}.jpeg`;
-
-    console.log("Fetching image from:", photoURL);
-    
-    const imageResponse = await fetch(photoURL);
-
-    if (!imageResponse.ok) {
-      console.error('Failed to fetch image. HTTP Status:', imageResponse.status);
-      return;
-    }
-
-    const imageBytes = await imageResponse.arrayBuffer();
-    const image = await pdfDoc.embedJpg(imageBytes);
-
-    const imageWidth = 50;
-    const imageHeight = 50;
-    const imageX = 460; // Adjust the X position
-    const imageY = 665; // Adjust the Y position
-
     const pages = pdfDoc.getPages();
-    let firstPage = pages[0]; // Use the first page of the template
+    let firstPage = pages[0];
+
+const photoURL = `src/assets/photos/${student.regNo}.jpeg`;
+const placeholderURL = `src/assets/photos/placeholder.jpeg`;
+let image;
+
+try {
+  // Attempt to fetch the student's image
+  const imageResponse = await fetch(photoURL);
+  if (imageResponse.ok) {
+    const imageBytes = await imageResponse.arrayBuffer();
+    image = await pdfDoc.embedJpg(imageBytes);
+  } else {
+    // Log and use placeholder if student image doesn't exist
+    console.warn(`Image not found for ${student.regNo}. Using placeholder.`);
+    const placeholderResponse = await fetch(placeholderURL);
+    if (placeholderResponse.ok) {
+      const placeholderBytes = await placeholderResponse.arrayBuffer();
+      image = await pdfDoc.embedJpg(placeholderBytes);
+    } else {
+      throw new Error('Placeholder image not found!');
+    }
+  }
+} catch (error) {
+  console.error(`Error fetching images for ${student.regNo}:`, error);
+  // Attempt to use the placeholder in case of fetch failure
+  try {
+    const placeholderResponse = await fetch(placeholderURL);
+    if (placeholderResponse.ok) {
+      const placeholderBytes = await placeholderResponse.arrayBuffer();
+      image = await pdfDoc.embedJpg(placeholderBytes);
+    } else {
+      console.error('Failed to fetch placeholder image. Skipping image.');
+    }
+  } catch (placeholderError) {
+    console.error('Error fetching placeholder image:', placeholderError);
+  }
+}
+// Add the image to the PDF if it exists
+if (image) {
+  const imageWidth = 45;
+  const imageHeight = 57;
+  const imageX = 460;
+  const imageY = 660;
+
+  firstPage.drawImage(image, {
+    x: imageX,
+    y: imageY,
+    width: imageWidth,
+    height: imageHeight,
+  });
+} else {
+  console.warn(`No image or placeholder available for ${student.regNo}. Skipping image.`);
+}
+
+     // Use the first page of the template
     // let yPosition = 670; // Initial y-position for student data
 
     // Determine the degree prefix dynamically
     // const degreePrefix = getDegreePrefix(dept.department);
 
-    firstPage.drawImage(image, {
-      x: imageX,
-      y: imageY,
-      width: imageWidth,
-      height: imageHeight,
-    });
+    // firstPage.drawImage(image, {
+    //   x: imageX,
+    //   y: imageY,
+    //   width: imageWidth,
+    //   height: imageHeight,
+    // });
 
     // Populate the dynamic fields on the PDF for the student
     firstPage.drawText(`${student.name}`, { x: 100, y: 706, size: fontSize, font, color });
@@ -115,6 +151,7 @@ const PDFGenh = ({ dept, receiptData, allReceiptData }) => {
     const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
     const fontSize = 5;
     const color = rgb(0, 0, 0);
+
   
     // Loop over each student to create a page for each with individual data
     for (const student of students) {
@@ -122,6 +159,62 @@ const PDFGenh = ({ dept, receiptData, allReceiptData }) => {
       const page = pdfDoc.addPage(templatePage); // Add the copied page to the document
       let yPosition = 733; // Initial y-position for student data
       // const degreePrefix = getDegreePrefix(dept.department);
+
+      const photoURL = `src/assets/photos/${student.regNo}.jpeg`;
+const placeholderURL = `src/assets/photos/placeholder.jpeg`;
+let image;
+
+try {
+  // Attempt to fetch the student's image
+  const imageResponse = await fetch(photoURL);
+  if (imageResponse.ok) {
+    const imageBytes = await imageResponse.arrayBuffer();
+    image = await pdfDoc.embedJpg(imageBytes);
+  } else {
+    // Log and use placeholder if student image doesn't exist
+    console.warn(`Image not found for ${student.regNo}. Using placeholder.`);
+    const placeholderResponse = await fetch(placeholderURL);
+    if (placeholderResponse.ok) {
+      const placeholderBytes = await placeholderResponse.arrayBuffer();
+      image = await pdfDoc.embedJpg(placeholderBytes);
+    } else {
+      throw new Error('Placeholder image not found!');
+    }
+  }
+} catch (error) {
+  console.error(`Error fetching images for ${student.regNo}:`, error);
+  // Attempt to use the placeholder in case of fetch failure
+  try {
+    const placeholderResponse = await fetch(placeholderURL);
+    if (placeholderResponse.ok) {
+      const placeholderBytes = await placeholderResponse.arrayBuffer();
+      image = await pdfDoc.embedJpg(placeholderBytes);
+    } else {
+      console.error('Failed to fetch placeholder image. Skipping image.');
+    }
+  } catch (placeholderError) {
+    console.error('Error fetching placeholder image:', placeholderError);
+  }
+}
+// Add the image to the PDF if it exists
+if (image) {
+  const imageWidth = 45;
+  const imageHeight = 57;
+  const imageX = 460;
+  const imageY = 660;
+
+  page.drawImage(image, {
+    x: imageX,
+    y: imageY,
+    width: imageWidth,
+    height: imageHeight,
+  });
+} else {
+  console.warn(`No image or placeholder available for ${student.regNo}. Skipping image.`);
+}
+
+
+      
 
   
       // Populate the dynamic fields on the PDF for each student
