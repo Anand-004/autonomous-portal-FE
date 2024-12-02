@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -7,6 +6,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import './../../pages/AttendancePage.css';
+import { useEffect, useState } from 'react';
+import { fetchDepartments, fetchSubjectsData } from '../../services/api/main';
 
 
 
@@ -27,14 +28,129 @@ const names = [
 function getStyles(name, personName, theme) {
   return {
     fontWeight: personName.includes(name)
-      ? theme.typography.fontWeightMedium
-      : theme.typography.fontWeightRegular,
+    ? theme.typography.fontWeightMedium
+    : theme.typography.fontWeightRegular,
   };
 }
 
-export default function MultipleSelect() {
+export default function MultipleSelect({ setData }) {
+  const [personName, setPersonName] = useState(["null"])
+  const [allDepts, setAlldepts] = useState(null)
+  const [selectedValues, setselectedValues] = useState({
+    degree: "",
+    batch: "",
+    department: "",
+    semester: 0,
+    subject: ""
+  })
+  const handleInitialChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value)
+    setselectedValues((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      }
+    })
+    console.log(selectedValues)
+  }
+  const [initialSelect, setInitialSelect] = useState({
+    degree: ["B.E", "B.Tech", "M.E", "Ph.D"],
+    batch: ["2021", "2022", "2023", "2024"],
+    department: null,
+    sems: null,
+    subjects: null
+  })
+  
+  const [semAndSub, setSemAndSubs] = useState(null)
+
+// Effect to watch changes in `initialSelect` state
+  // useEffect(() => {
+  //   console.log("Updated initialSelect:", initialSelect); // This will run whenever `initialSelect` changes
+  // }, [initialSelect]);
+  
+  useEffect(() => {
+    
+    const fetchFunc = async () => {
+      const { departments } = await fetchDepartments();
+      console.log("depts", departments); // Log the fetched departments
+  
+      // Set the state with the new department data
+      setAlldepts(departments)
+      setInitialSelect((data) => {
+        return {
+          ...data,
+          department: departments,
+        }
+      })
+    };
+  
+    fetchFunc();
+  }, []);
+
+  // Filter departments when the degree is selected
+  useEffect(() => {
+    console.log("----------")
+    if (selectedValues.degree?.length) {
+      console.log("sel Degree - ", selectedValues.degree,
+        "---- Depts ---", initialSelect.department
+      )
+      const depts = allDepts?.filter(dept => {
+        return dept.degree === selectedValues.degree 
+      });
+      console.log(depts)
+      setInitialSelect((data) => {
+        return {
+          ...data,
+          department: depts,
+        }
+      })
+      // setSelectedDept(''); // Reset department selection
+      // setDeptName(null); // Reset department name
+    } 
+  }, [selectedValues.degree]);
+
+  useEffect(() => {
+
+    function createArray(n) {
+      return new Array(n).fill().map((_, index) => index+1);
+    }
+
+    const fetchSub = async () => {
+      const data = {
+        dept_id: selectedValues.department,
+        batch: selectedValues.batch
+      }
+      const semData = await fetchSubjectsData(data)
+      setSemAndSubs(semData)
+      const semArr = createArray(semData?.length)
+      setInitialSelect((prev) => {
+        return {
+          ...prev,
+          sems: semArr 
+        }
+      })
+    }
+    if (selectedValues.degree, selectedValues.batch, selectedValues.department) {
+      fetchSub()
+    }
+  }, [selectedValues])
+  
+  useEffect(() => {
+    const subs = semAndSub?.filter(sem => sem.sem_no === selectedValues.semester)
+    // console.log(subs[0].subjects)
+    subs?.length && setInitialSelect((prev) => {
+        return {
+          ...prev,
+          subjects: subs[0].subjects 
+        }
+      })
+  }, [selectedValues.semester])
+  // useEffect(() => {
+  //   console.log(selectedValues)
+  // },[selectedValues])
+  
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
 
   const handleChange = (event) => {
     const {
@@ -62,14 +178,14 @@ export default function MultipleSelect() {
         {/* <InputLabel id="demo-multiple-name-label">Degree</InputLabel> */}
         <Select
           labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          multiple
-          value={personName}
-          onChange={handleChange}
+          id="degree"
+          name='degree'
+          value={selectedValues.degree}
+          onChange={handleInitialChange}
           input={<OutlinedInput label="Degree" />}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {initialSelect.degree.map((name) => (
             <MenuItem
               key={name}
               value={name}
@@ -84,20 +200,20 @@ export default function MultipleSelect() {
         <InputLabel id="demo-multiple-name-label">Department</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          multiple
-          value={personName}
-          onChange={handleChange}
+          id="department"
+          name='department'
+          value={selectedValues.department}
+          onChange={handleInitialChange}
           input={<OutlinedInput label="Department" />}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {initialSelect?.department?.map((name) => (
             <MenuItem
-              key={name}
-              value={name}
+              key={name._id}
+              value={name._id}
               style={getStyles(name, personName, theme)}
             >
-              {name}
+              {name.department}
             </MenuItem>
           ))}
         </Select>
@@ -106,14 +222,14 @@ export default function MultipleSelect() {
         <InputLabel id="demo-multiple-name-label">Batch</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          multiple
-          value={personName}
-          onChange={handleChange}
+          id="batch"
+          name = 'batch'
+          value={selectedValues.batch}
+          onChange={handleInitialChange}
           input={<OutlinedInput label="Batch" />}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {initialSelect.batch.map((name) => (
             <MenuItem
               key={name}
               value={name}
@@ -128,14 +244,14 @@ export default function MultipleSelect() {
         <InputLabel id="demo-multiple-name-label">Semester</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          multiple
-          value={personName}
-          onChange={handleChange}
+          id='semester'
+          name='semester'
+          value={selectedValues.sem}
+          onChange={handleInitialChange}
           input={<OutlinedInput label="Semester" />}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {initialSelect.sems?.map((name) => (
             <MenuItem
               key={name}
               value={name}
@@ -147,23 +263,23 @@ export default function MultipleSelect() {
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-name-label">Subject Code</InputLabel>
+        <InputLabel id="demo-multiple-name-label">Subject</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          multiple
-          value={personName}
-          onChange={handleChange}
+          id='subject'
+          name='subject'
+          value={selectedValues.subject}
+          onChange={handleInitialChange}
           input={<OutlinedInput label="Subject Code" />}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {initialSelect.subjects?.map((sub) => (
             <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, personName, theme)}
+              key={sub._id}
+              value={sub.name}
+              style={getStyles("name", personName, theme)}
             >
-              {name}
+              {`${sub.code} - ${sub.name}`}
             </MenuItem>
           ))}
         </Select>

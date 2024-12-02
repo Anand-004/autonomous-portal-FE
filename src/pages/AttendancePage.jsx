@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ButtonAppBar from '../assets/components/Navbar2'
 import './AttendancePage.css'
 import MultipleSelect from '../assets/components/Select1'
@@ -7,9 +7,8 @@ import ToggleButtons from '../assets/components/Toggle';
 
 
 
-
-
 const AttendancePage = () => {
+  const [students, setStudents] = useState([])
   return (
 <div className="attencont">
       <div className="navdiv">
@@ -17,7 +16,7 @@ const AttendancePage = () => {
       </div>
       <div className="filterdiv">
         <div className="filtertopdiv">          
-            < MultipleSelect />
+            <MultipleSelect setStudents = { setStudents } />
         </div>
         
       </div>

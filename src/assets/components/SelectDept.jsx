@@ -38,7 +38,7 @@ export default function BasicSelect({ updateDept, updateBatch, setDeptName }) {
     } else {
       setFilteredDepts(depts); // Show all departments if no degree is selected
     }
-  }, [selectedDegree, depts]);
+  }, [selectedDegree]);
 
   // Handle degree change
   const handleDegreeChange = (event) => {
