@@ -4,6 +4,7 @@ import './AttendancePage.css'
 import MultipleSelect from '../assets/components/Select1'
 import Divider from '@mui/material/Divider';
 import ToggleButtons from '../assets/components/Toggle';
+import ColorButtons from '../assets/components/Attenbutton';
 
 
 
@@ -23,12 +24,12 @@ const AttendancePage = () => {
       </div>
       <Divider/>
       <div className="togglediv">
-      <ToggleButtons />
+      <ColorButtons />
       </div>
 
-      <div className="iframediv">
+      {/* <div className="iframediv">
         
-      </div>
+      </div> */}
 
       
     </div>  )
