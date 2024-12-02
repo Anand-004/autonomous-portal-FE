@@ -49,14 +49,24 @@ export default function MultipleSelect() {
   return (
     <div style={{display: "flex",flexWrap:"wrap",width:"100%"}}>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+      <InputLabel
+    id="demo-multiple-name-label"
+    sx={{
+      '&.Mui-focused, &.MuiInputLabel-shrink': {
+        width: '200%', // Set the desired width here
+      },
+    }}
+  >
+    Degree
+  </InputLabel>
+        {/* <InputLabel id="demo-multiple-name-label">Degree</InputLabel> */}
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
           multiple
           value={personName}
           onChange={handleChange}
-          input={<OutlinedInput label="Name" />}
+          input={<OutlinedInput label="Degree" />}
           MenuProps={MenuProps}
         >
           {names.map((name) => (
@@ -71,14 +81,14 @@ export default function MultipleSelect() {
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, width: 500 }}>
-        <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+        <InputLabel id="demo-multiple-name-label">Department</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
           multiple
           value={personName}
           onChange={handleChange}
-          input={<OutlinedInput label="Name" />}
+          input={<OutlinedInput label="Department" />}
           MenuProps={MenuProps}
         >
           {names.map((name) => (
@@ -93,14 +103,14 @@ export default function MultipleSelect() {
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, width: 400 }}>
-        <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+        <InputLabel id="demo-multiple-name-label">Batch</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
           multiple
           value={personName}
           onChange={handleChange}
-          input={<OutlinedInput label="Name" />}
+          input={<OutlinedInput label="Batch" />}
           MenuProps={MenuProps}
         >
           {names.map((name) => (
@@ -115,14 +125,14 @@ export default function MultipleSelect() {
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+        <InputLabel id="demo-multiple-name-label">Semester</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
           multiple
           value={personName}
           onChange={handleChange}
-          input={<OutlinedInput label="Name" />}
+          input={<OutlinedInput label="Semester" />}
           MenuProps={MenuProps}
         >
           {names.map((name) => (
@@ -137,14 +147,14 @@ export default function MultipleSelect() {
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+        <InputLabel id="demo-multiple-name-label">Subject Code</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
           multiple
           value={personName}
           onChange={handleChange}
-          input={<OutlinedInput label="Name" />}
+          input={<OutlinedInput label="Subject Code" />}
           MenuProps={MenuProps}
         >
           {names.map((name) => (
