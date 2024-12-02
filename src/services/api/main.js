@@ -53,6 +53,26 @@ export const fetchDepartments = async () => {
       return [];
     }
   };
+ 
+export const fetchSubjectsData = async (data) => {
+    const token = sessionStorage.getItem('token')
+    try {
+      const response = await axios.post(`${BASE_URL}/main/subjects`,data ,
+        {
+          headers: {
+            token: token // Assuming 'token' is a valid authorization token
+          }
+        }
+      ); 
+      console.log(response.data);
+      return response?.data?.data;
+
+    } catch (err) {
+      // setError('Error fetching Batches');
+      console.error(err);
+      return [];
+    }
+  };
 
   
 export const insertData = async (dept_id, batch_id, data) => {
