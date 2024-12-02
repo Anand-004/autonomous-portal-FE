@@ -3,8 +3,12 @@ import ButtonAppBar from '../assets/components/Navbar2'
 import './AttendancePage.css'
 import MultipleSelect from '../assets/components/Select1'
 import Divider from '@mui/material/Divider';
-import ToggleButtons from '../assets/components/Toggle';
+// import ToggleButtons from '../assets/components/Toggle';
 import ColorButtons from '../assets/components/Attenbutton';
+// import Pdfgena from '../assets/components/Pdfgena';
+import PdfManipulator from '../assets/components/Pdfgena';
+// import Divider from '@mui/material/Divider';
+
 
 
 
@@ -20,16 +24,23 @@ const AttendancePage = () => {
         <div className="filtertopdiv">          
             < MultipleSelect />
         </div>
+
         
       </div>
+      <div className="dividerdiv">
       <Divider/>
+      </div>
+      
       <div className="togglediv">
       <ColorButtons />
       </div>
+      <div className="dividerdiv">
+      <Divider/>
+      </div>
 
-      {/* <div className="iframediv">
-        
-      </div> */}
+      <div className="iframediv">
+        <PdfManipulator/>
+      </div>
 
       
     </div>  )

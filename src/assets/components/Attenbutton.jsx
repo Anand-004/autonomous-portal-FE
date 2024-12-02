@@ -4,14 +4,14 @@ import Button from '@mui/material/Button';
 
 export default function ColorButtons() {
   return (
-    <Stack direction="row" spacing={2}>
+    <Stack direction="row" spacing={10}> {/* Increase spacing between buttons */}
       <Button
         variant="contained"
         color="secondary"
         sx={{
           '&:hover': {
-            backgroundColor: 'primary.main', // Change background on hover
-            color: '#fff', // Optional: Change text color
+            backgroundColor: 'primary.main',
+            color: '#fff',
           },
         }}
       >
@@ -22,8 +22,8 @@ export default function ColorButtons() {
         color="success"
         sx={{
           '&:hover': {
-            backgroundColor: 'info.main', // Change background on hover
-            color: '#fff', // Optional: Change text color
+            backgroundColor: 'info.main',
+            color: '#fff',
           },
         }}
       >
