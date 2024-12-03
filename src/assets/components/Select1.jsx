@@ -205,7 +205,6 @@ export default function MultipleSelect({ setData }) {
           value={selectedValues.department}
           onChange={handleInitialChange}
           input={<OutlinedInput label="Department" />}
-          MenuProps={MenuProps}
         >
           {initialSelect?.department?.map((name) => (
             <MenuItem
@@ -227,7 +226,6 @@ export default function MultipleSelect({ setData }) {
           value={selectedValues.batch}
           onChange={handleInitialChange}
           input={<OutlinedInput label="Batch" />}
-          MenuProps={MenuProps}
         >
           {initialSelect.batch.map((name) => (
             <MenuItem
@@ -249,7 +247,6 @@ export default function MultipleSelect({ setData }) {
           value={selectedValues.sem}
           onChange={handleInitialChange}
           input={<OutlinedInput label="Semester" />}
-          MenuProps={MenuProps}
         >
           {initialSelect.sems?.map((name) => (
             <MenuItem
@@ -271,7 +268,6 @@ export default function MultipleSelect({ setData }) {
           value={selectedValues.subject}
           onChange={handleInitialChange}
           input={<OutlinedInput label="Subject Code" />}
-          MenuProps={MenuProps}
         >
           {initialSelect.subjects?.map((sub) => (
             <MenuItem
