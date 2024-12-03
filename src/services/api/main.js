@@ -54,25 +54,45 @@ export const fetchDepartments = async () => {
     }
   };
  
-export const fetchSubjectsData = async (data) => {
-    const token = sessionStorage.getItem('token')
-    try {
-      const response = await axios.post(`${BASE_URL}/main/subjects`,data ,
-        {
-          headers: {
-            token: token // Assuming 'token' is a valid authorization token
+  export const fetchSubjectsData = async (data) => {
+      const token = sessionStorage.getItem('token')
+      try {
+        const response = await axios.post(`${BASE_URL}/main/subjects`,data ,
+          {
+            headers: {
+              token: token
+            }
           }
-        }
-      ); 
-      console.log(response.data);
-      return response?.data?.data;
+        ); 
+        console.log(response.data);
+        return response?.data?.data;
 
-    } catch (err) {
-      // setError('Error fetching Batches');
-      console.error(err);
-      return [];
-    }
-  };
+      } catch (err) {
+        // setError('Error fetching Batches');
+        console.error(err);
+        return [];
+      }
+};
+
+  export const fetchAttendanceData = async (data) => {
+      const token = sessionStorage.getItem('token')
+      try {
+        const response = await axios.post(`${BASE_URL}/students/deptAttendance`,data ,
+          {
+            headers: {
+              token: token
+            }
+          }
+        ); 
+        console.log(response.data);
+        return response?.data?.students;
+
+      } catch (err) {
+        // setError('Error fetching Batches');
+        console.error(err);
+        return [];
+      }
+    };
 
   
 export const insertData = async (dept_id, batch_id, data) => {

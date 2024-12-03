@@ -7,7 +7,7 @@ import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import './../../pages/AttendancePage.css';
 import { useEffect, useState } from 'react';
-import { fetchDepartments, fetchSubjectsData } from '../../services/api/main';
+import { fetchAttendanceData, fetchDepartments, fetchSubjectsData } from '../../services/api/main';
 
 
 
@@ -35,7 +35,9 @@ function getStyles(name, personName, theme) {
 
 export default function MultipleSelect({ setData }) {
   const [personName, setPersonName] = useState(["null"])
+  const [btnDisable, setBtnDisable] = useState(false)
   const [allDepts, setAlldepts] = useState(null)
+  const [attendanceData, setAttendanceData] = useState([])
   const [selectedValues, setselectedValues] = useState({
     degree: "",
     batch: "",
@@ -43,6 +45,30 @@ export default function MultipleSelect({ setData }) {
     semester: 0,
     subject: ""
   })
+  const handleButtonClick = async() => {
+    setBtnDisable(true)
+    const data = {
+      subject_code: selectedValues.subject.code,
+      department_id: selectedValues.department,
+      batch: selectedValues.batch
+    }
+    console.log("data", data)
+    const attenData = await fetchAttendanceData(data)
+    console.log(allDepts, selectedValues)
+    const dept = allDepts.filter( dept => dept._id === selectedValues.department )
+    const PDFContent = {
+      studentData: attenData,
+      department: dept[0]?.department,
+      degree: dept[0]?.degree,
+      semester: selectedValues.semester,
+      subject_code: selectedValues.subject.code,
+      subject_name: selectedValues.subject.name
+    }
+    console.log("Final -- ", PDFContent)
+    setData(PDFContent)
+    setBtnDisable(false)
+  }
+
   const handleInitialChange = (e) => {
     const { name, value } = e.target;
     console.log(name, value)
@@ -54,6 +80,7 @@ export default function MultipleSelect({ setData }) {
     })
     console.log(selectedValues)
   }
+
   const [initialSelect, setInitialSelect] = useState({
     degree: ["B.E", "B.Tech", "M.E", "Ph.D"],
     batch: ["2021", "2022", "2023", "2024"],
@@ -244,7 +271,7 @@ export default function MultipleSelect({ setData }) {
           labelId="demo-multiple-name-label"
           id='semester'
           name='semester'
-          value={selectedValues.sem}
+          value={selectedValues?.semester}
           onChange={handleInitialChange}
           input={<OutlinedInput label="Semester" />}
         >
@@ -272,7 +299,7 @@ export default function MultipleSelect({ setData }) {
           {initialSelect.subjects?.map((sub) => (
             <MenuItem
               key={sub._id}
-              value={sub.name}
+              value={sub}
               style={getStyles("name", personName, theme)}
             >
               {`${sub.code} - ${sub.name}`}
@@ -281,8 +308,13 @@ export default function MultipleSelect({ setData }) {
         </Select>
       </FormControl>
       <div className="buttondiv">
-      <Button variant="contained" className="customButton">
-          Generate</Button>
+        <Button
+          disabled= {btnDisable}
+          onClick={handleButtonClick}
+          variant="contained"
+          className="customButton">
+          Generate
+      </Button>
           </div>
     </div>
   );

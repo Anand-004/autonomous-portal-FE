@@ -13,7 +13,7 @@ import PdfManipulator from '../assets/components/Pdfgena';
 
 
 const AttendancePage = () => {
-  const [students, setStudents] = useState([])
+  const [PDFContent, setPDFContent] = useState(null)
   return (
 <div className="attencont">
       <div className="navdiv">
@@ -21,7 +21,7 @@ const AttendancePage = () => {
       </div>
       <div className="filterdiv">
         <div className="filtertopdiv">          
-            <MultipleSelect setStudents = { setStudents } />
+            <MultipleSelect setStudents = { setPDFContent } />
         </div>
 
         
