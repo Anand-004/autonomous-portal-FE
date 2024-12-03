@@ -40,9 +40,9 @@ const AttendancePage = () => {
       </div>
 
       <div className="iframediv">
-        <PdfManipulator data={ PDFContent } />
-        <Pdfgena/>
-        <Pdfgenm/>
+        <Pdfgena data={ PDFContent } />
+        {/* <Pdfgena/> */}
+        <Pdfgenm data={ PDFContent }/>
       </div>
 
       

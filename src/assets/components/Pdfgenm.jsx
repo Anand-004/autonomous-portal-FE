@@ -4,10 +4,10 @@ import { Button } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
 import marksheetTemplate from './../../pdfs/marksheet.pdf';
 
-const Pdfgenm = () => {
+const Pdfgenm = ({data}) => {
   const [pdfUrl, setPdfUrl] = useState(null); // State to store the generated PDF URL
 
-  const data = {
+  const data1 = {
     "studentData": [
       { "name": "ANIRUTH", "reg_no": 712922104008, "id": "674d8d7e9677925bcf4491b1" },
       { "name": "DIBHAKAR B", "reg_no": 712922104016, "id": "674d8d8a9677925bcf4492aa" },
