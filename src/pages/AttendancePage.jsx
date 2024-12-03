@@ -38,7 +38,7 @@ const AttendancePage = () => {
       </div>
 
       <div className="iframediv">
-        <PdfManipulator/>
+        <PdfManipulator data={ PDFContent } />
       </div>
 
       
