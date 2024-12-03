@@ -6,7 +6,9 @@ import Divider from '@mui/material/Divider';
 // import ToggleButtons from '../assets/components/Toggle';
 import ColorButtons from '../assets/components/Attenbutton';
 // import Pdfgena from '../assets/components/Pdfgena';
-import PdfManipulator from '../assets/components/Pdfgena';
+// import PdfManipulator from '../assets/components/Pdfgena';
+import Pdfgenm from '../assets/components/Pdfgenm';
+import Pdfgena from '../assets/components/Pdfgena';
 // import Divider from '@mui/material/Divider';
 
 
@@ -38,7 +40,8 @@ const AttendancePage = () => {
       </div>
 
       <div className="iframediv">
-        <PdfManipulator/>
+        <Pdfgena/>
+        <Pdfgenm/>
       </div>
 
       

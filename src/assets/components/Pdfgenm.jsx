@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Button } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
-import attendanceTemplate from './../../pdfs/attendance.pdf';
+import marksheetTemplate from './../../pdfs/marksheet.pdf';
 
-const Pdfgena = () => {
+const Pdfgenm = () => {
   const [pdfUrl, setPdfUrl] = useState(null); // State to store the generated PDF URL
 
   const data = {
@@ -28,7 +28,7 @@ const Pdfgena = () => {
   };
 
   const createPDFForStudent = async (students, department, degree, semester, subjectName, subjectCode) => {
-    const templateBytes = await fetch(attendanceTemplate).then((res) => res.arrayBuffer());
+    const templateBytes = await fetch(marksheetTemplate).then((res) => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(templateBytes);
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
     const fontSize = 8;
@@ -58,7 +58,7 @@ const Pdfgena = () => {
     students.forEach((student) => {
       firstPage.drawText(`${sno}`, { x: xposistion, y: yPosition, size: fontSize, font, color });
       firstPage.drawText(`${student.reg_no}`, { x: xposistion+30, y: yPosition, size: fontSize, font, color });
-      firstPage.drawText(`${student.name}`, { x: xposistion+112, y: yPosition, size: fontSize, font, color });
+    //   firstPage.drawText(`${student.name}`, { x: xposistion+112, y: yPosition, size: fontSize, font, color });
       yPosition -= rowHeight;
       sno=sno+1;
 
@@ -104,4 +104,4 @@ const Pdfgena = () => {
   );
 };
 
-export default Pdfgena;
+export default Pdfgenm;
