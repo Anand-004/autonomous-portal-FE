@@ -1,70 +1,107 @@
 import React, { useState } from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
-import pdfTemplate from './../../pdfs/attendance.pdf'; 
+import { Button } from '@mui/material';
+import DescriptionIcon from '@mui/icons-material/Description';
+import attendanceTemplate from './../../pdfs/attendance.pdf';
 
-const PdfManipulator = () => {
-  const [pdfUrl, setPdfUrl] = useState(null);
+const Pdfgena = () => {
+  const [pdfUrl, setPdfUrl] = useState(null); // State to store the generated PDF URL
 
-  const handleGeneratePdf = async () => {
-    // Load the PDF template
-    const existingPdfBytes = await fetch(pdfTemplate).then((res) => res.arrayBuffer());
+  const data = {
+    "studentData": [
+      { "name": "ANIRUTH", "reg_no": 712922104008, "id": "674d8d7e9677925bcf4491b1" },
+      { "name": "DIBHAKAR B", "reg_no": 712922104016, "id": "674d8d8a9677925bcf4492aa" },
+      { "name": "GOKUL N", "reg_no": 712922104020, "id": "674d8d919677925bcf449318" },
+      { "name": "JAGANATH J", "reg_no": 712922104027, "id": "674d8d9c9677925bcf4493df" },
+      { "name": "MIDHUN DAS", "reg_no": 712922104034, "id": "674d8da79677925bcf4494b2" },
+      { "name": "NAZEEF A", "reg_no": 712922104036, "id": "674d8daa9677925bcf4494f9" },
+      { "name": "SABARIMANI D", "reg_no": 712922104043, "id": "674d8db49677925bcf4495a3" },
+      { "name": "VIGNESHWARAN M", "reg_no": 712922104054, "id": "674d8dc59677925bcf4496b8" },
+      { "name": "AVINASH S", "reg_no": 712922104702, "id": "674d8ddb9677925bcf449815" },
+      { "name": "HARI RAMA KRISHNAN", "reg_no": 712922104704, "id": "674d8de09677925bcf449866" }
+    ],
+    "department": "Computer Science and Engineering",
+    "degree": "B.E",
+    "semester": 2,
+    "subject_code": "CS3251",
+    "subject_name": "Programming In C"
+  };
 
-    // Load the PDFDocument
-    const pdfDoc = await PDFDocument.load(existingPdfBytes);
-
-    // Embed a font
+  const createPDFForStudent = async (students, department, degree, semester, subjectName, subjectCode) => {
+    const templateBytes = await fetch(attendanceTemplate).then((res) => res.arrayBuffer());
+    const pdfDoc = await PDFDocument.load(templateBytes);
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    const fontSize = 9;
+    const color = rgb(0, 0, 0);
 
-    // Get the first page of the PDF
     const pages = pdfDoc.getPages();
     const firstPage = pages[0];
 
-    // Define dynamic text
-    const textFields = [
-      { text: 'Name: John Doe', x: 100, y: 700, size: 12, color: rgb(0, 0, 0) },
-      { text: 'Reg No: 123456789', x: 100, y: 680, size: 12, color: rgb(0, 0, 0) },
-      { text: 'Subject: Computer Science', x: 100, y: 660, size: 12, color: rgb(0, 0, 0) },
-    ];
+    // Fill in static fields
+    firstPage.drawText(degree, { x: 120, y: 680, size: fontSize, font, color });
+    firstPage.drawText(subjectName, { x: 120, y: 680, size: fontSize, font, color });
+    firstPage.drawText(subjectCode, { x: 120, y: 660, size: fontSize, font, color });
+    firstPage.drawText(`${semester}`, { x: 420, y: 680, size: fontSize, font, color });
+    firstPage.drawText(department, { x: 140, y: 680, size: fontSize, font, color });
 
-    // Draw each text field
-    textFields.forEach((field) => {
-      firstPage.drawText(field.text, {
-        x: field.x,
-        y: field.y,
-        size: field.size,
-        font,
-        color: field.color,
-      });
+    // Fill in student-specific fields
+    let yPosition = 600; // Start for student data
+    const rowHeight = 20;
+
+    // firstPage.drawText("S.No", { x: 30, y: yPosition, size: fontSize, font, color });
+    // firstPage.drawText("Register No", { x: 70, y: yPosition, size: fontSize, font, color });
+    // firstPage.drawText("Name of the Student", { x: 150, y: yPosition, size: fontSize, font, color });
+    // yPosition -= rowHeight;
+
+    // Insert student data
+    let sno = 1;
+    students.forEach((student) => {
+      firstPage.drawText(`${sno}`, { x: 30, y: yPosition, size: fontSize, font, color });
+      firstPage.drawText(`${student.reg_no}`, { x: 70, y: yPosition, size: fontSize, font, color });
+      firstPage.drawText(`${student.name}`, { x: 150, y: yPosition, size: fontSize, font, color });
+      yPosition -= rowHeight;
+      sno=sno+1;
+
+      // Check for page overflow and create a new page
+      // if (yPosition < 50) {
+      //   const [newPage] = await pdfDoc.copyPages(pdfDoc, [0]);
+      //   pdfDoc.addPage(newPage);
+      //   yPosition = 700; // Reset position for new page
+      // }
+      // sno += 1;
     });
 
-    // Save the PDF
+    // Save the modified PDF
     const pdfBytes = await pdfDoc.save();
+    return pdfBytes;
+  };
 
-    // Create a blob and generate a URL for download
+  const handleGeneratePDF = async () => {
+    const { department, degree, semester, subject_code, subject_name, studentData } = data;
+
+    // Generate PDF for students
+    const pdfBytes = await createPDFForStudent(studentData, department, degree, semester, subject_name, subject_code);
+
+    // Create a Blob and generate a URL for the iframe
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
-    setPdfUrl(url);
+    setPdfUrl(url); // Set the generated URL for the iframe
   };
 
   return (
     <div>
-      <button onClick={handleGeneratePdf}>Generate PDF</button>
-      {/* {pdfUrl && (
-        // <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
-        //   Download PDF
-        // </a>
-      )} */}
-        {pdfUrl && (
+      <Button onClick={handleGeneratePDF} variant="contained" color="primary" startIcon={<DescriptionIcon />}>
+        Generate Attendance Sheet
+      </Button>
+      {pdfUrl && (
         <iframe
           src={pdfUrl}
-          title="PDF Preview"
-          width="100%"
-          height="900px"
-          style={{ border: "1px solid #ddd", marginTop: "20px" }}
+          title="Generated PDF"
+          style={{ width: '100%', height: '600px', marginTop: '20px', border: '1px solid #ccc' }}
         ></iframe>
       )}
     </div>
   );
 };
 
-export default PdfManipulator;
+export default Pdfgena;
