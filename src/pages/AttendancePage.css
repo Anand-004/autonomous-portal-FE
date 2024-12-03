@@ -72,10 +72,10 @@
   }
 
   .togglediv{
-    width: 100%;
+    width: 50%;
     /* background-color: aliceblue; */
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     padding: 30px;
     margin-top: 50px;
     margin-bottom: 50px;

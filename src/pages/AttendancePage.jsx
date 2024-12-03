@@ -33,17 +33,18 @@ const AttendancePage = () => {
       </div>
       
       <div className="togglediv">
-      <ColorButtons />
+      {/* <ColorButtons /> */}
+      <Pdfgena data={ PDFContent } />
+        {/* <Pdfgena/> */}
+        <Pdfgenm data={ PDFContent }/>
       </div>
       <div className="dividerdiv">
       <Divider/>
       </div>
 
-      <div className="iframediv">
-        <Pdfgena data={ PDFContent } />
-        {/* <Pdfgena/> */}
-        <Pdfgenm data={ PDFContent }/>
-      </div>
+      {/* <div className="iframediv">
+        
+      </div> */}
 
       
     </div>  )
