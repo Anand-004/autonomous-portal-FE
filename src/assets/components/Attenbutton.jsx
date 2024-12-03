@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 
 export default function ColorButtons() {
   return (
-    <Stack direction="row" spacing={10}> {/* Increase spacing between buttons */}
+    <Stack direction="row" spacing={5}> {/* Increase spacing between buttons */}
       <Button
         variant="contained"
         color="secondary"

@@ -21,7 +21,7 @@ const AttendancePage = () => {
       </div>
       <div className="filterdiv">
         <div className="filtertopdiv">          
-            <MultipleSelect setStudents = { setPDFContent } />
+            <MultipleSelect setData = { setPDFContent } />
         </div>
 
         

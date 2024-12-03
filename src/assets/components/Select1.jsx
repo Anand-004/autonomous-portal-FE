@@ -286,7 +286,7 @@ export default function MultipleSelect({ setData }) {
           ))}
         </Select>
       </FormControl>
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 1, width: 500 }}>
         <InputLabel id="demo-multiple-name-label">Subject</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
@@ -306,6 +306,7 @@ export default function MultipleSelect({ setData }) {
             </MenuItem>
           ))}
         </Select>
+        
       </FormControl>
       <div className="buttondiv">
         <Button
@@ -316,6 +317,7 @@ export default function MultipleSelect({ setData }) {
           Generate
       </Button>
           </div>
+      
     </div>
   );
 }

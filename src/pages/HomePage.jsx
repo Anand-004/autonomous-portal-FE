@@ -10,6 +10,7 @@ import CustomizedTables from '../assets/components/Details'
 import { fetchStudentsData, insertData } from '../services/api/main'
 import LinearIndeterminate from '../assets/components/loading'
 // import StickyHeadTable from '../assets/components/table2'
+import ConfirmDialog from './../assets/components/Deletepop.jsx'
 
 const HomePage = () => {
   const [dept, setDept] = useState('')
@@ -209,6 +210,8 @@ const HomePage = () => {
            </div>
            <div className="Filterright">
            <DisableElevation handleFilter={ handleFilter } isDisabled={bothSelected}/>
+
+           <ConfirmDialog />
            </div>
            
         </div>

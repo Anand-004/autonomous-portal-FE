@@ -45,10 +45,10 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     margin-bottom: 20px;
     /* background-color: #ccc; */
-    padding-left: 150PX;
+    padding-left: 90PX;
     /* height: 70px; */
     margin-top: 5px;
   }

@@ -54,6 +54,7 @@ export const fetchDepartments = async () => {
     }
   };
  
+<<<<<<< HEAD
   export const fetchSubjectsData = async (data) => {
       const token = sessionStorage.getItem('token')
       try {
@@ -62,6 +63,35 @@ export const fetchDepartments = async () => {
             headers: {
               token: token
             }
+=======
+  export const deleteBatch = async (data) => {
+    const token = sessionStorage.getItem('token')
+    try {
+      const response = await axios.post(`${BASE_URL}/students/deleteBatch`,data ,
+        {
+          headers: {
+            token: token // Assuming 'token' is a valid authorization token
+          }
+        }
+      ); 
+      console.log(response.data);
+      return response.data;
+
+    } catch (err) {
+      // setError('Error fetching Batches');
+      console.error(err);
+      return [];
+    }
+  };
+ 
+export const fetchSubjectsData = async (data) => {
+    const token = sessionStorage.getItem('token')
+    try {
+      const response = await axios.post(`${BASE_URL}/main/subjects`,data ,
+        {
+          headers: {
+            token: token // Assuming 'token' is a valid authorization token
+>>>>>>> 1dce0d0778f269e6791240110e4af0542c345ecb
           }
         ); 
         console.log(response.data);
