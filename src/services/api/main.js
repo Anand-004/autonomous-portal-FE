@@ -54,6 +54,26 @@ export const fetchDepartments = async () => {
     }
   };
  
+  export const deleteBatch = async (data) => {
+    const token = sessionStorage.getItem('token')
+    try {
+      const response = await axios.post(`${BASE_URL}/students/deleteBatch`,data ,
+        {
+          headers: {
+            token: token // Assuming 'token' is a valid authorization token
+          }
+        }
+      ); 
+      console.log(response.data);
+      return response.data;
+
+    } catch (err) {
+      // setError('Error fetching Batches');
+      console.error(err);
+      return [];
+    }
+  };
+ 
 export const fetchSubjectsData = async (data) => {
     const token = sessionStorage.getItem('token')
     try {
