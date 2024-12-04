@@ -18,9 +18,6 @@ import LinearIndeterminate from '../assets/components/loading';
 const AttendancePage = () => {
   const [PDFContent, setPDFContent] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
-  useEffect(() => {
-    
-  },[])
   return (
 <div className="attencont">
       <div className="navdiv">
