@@ -10,8 +10,7 @@ function DemoContent({ dept, batch }) {
     <div>
       <Button
         onClick={async () => {
-          // preview-start
-          const confirmed = await dialogs.confirm('Are you sure? want to Delete the Student Data', {
+          const confirmed = await dialogs.confirm('Are you sure? Want to delete the student data?', {
             okText: 'Yes',
             cancelText: 'No',
           });
@@ -27,12 +26,20 @@ function DemoContent({ dept, batch }) {
             // await deleteBatch(reqData)
             await dialogs.alert("Data Deleted");
           } else {
-            await dialogs.alert('deletion cancelled');
+            await dialogs.alert('Deletion Cancelled');
           }
-          // preview-end
+        }}
+        sx={{
+          padding: 1,
+          transition: 'transform 0.3s ease, background-color 0.3s ease',
+          '&:hover': {
+            transform: 'scale(1.1)', // Slight enlargement on hover
+            backgroundColor: 'red',
+            color:'white' 
+          },
         }}
       >
-        <DeleteIcon sx={{ color: "red",fontSize: 30 }} />
+        <DeleteIcon sx={{ fontSize: 30 }} />
       </Button>
     </div>
   );

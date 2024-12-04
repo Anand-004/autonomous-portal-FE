@@ -2,7 +2,7 @@ import React from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Button } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
-import attendanceTemplate from './../../pdfs/attendance.pdf';
+import attendanceTemplate from './../../pdfs/marksheet.pdf';
 
 const Pdfgenm = ({ data }) => {
   const createPDFForStudent = async (students, department, degree, semester, subjectName, subjectCode) => {
@@ -48,8 +48,13 @@ const Pdfgenm = ({ data }) => {
         yPosition = 578;
         rowsOnCurrentPage = 0;
       }
+      if(sno<10){
+        currentPage.drawText(`  ${sno}`, { x: 65, y: yPosition, size: fontSize, font, color });
 
-      currentPage.drawText(`${sno}`, { x: 65, y: yPosition, size: fontSize, font, color });
+      }else{
+        currentPage.drawText(`${sno}`, { x: 65, y: yPosition, size: fontSize, font, color });
+
+      }
       currentPage.drawText(`${student.reg_no}`, { x: 95, y: yPosition, size: fontSize, font, color });
       // currentPage.drawText(`${student.name}`, { x: 177, y: yPosition, size: fontSize, font, color });
 

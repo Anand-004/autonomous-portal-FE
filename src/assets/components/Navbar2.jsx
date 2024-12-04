@@ -6,6 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
+
 export default function ButtonAppBar() {
   const navigate = useNavigate();
   const location = useLocation(); // Get the current route

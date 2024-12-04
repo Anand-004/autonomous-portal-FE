@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import AttendancePage from './pages/AttendancePage';
 
+
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -24,7 +25,8 @@ const App = () => {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LoginPage />} />
-          <Route path="/atten" element={<AttendancePage />}/>
+          <Route path="/atten" 
+          element={isAuthenticated ? <AttendancePage /> : <LoginPage />}/>
           
           {/* Protected Route */}
           <Route 
