@@ -211,11 +211,7 @@ const HomePage = () => {
            <div className="Filterright">
            <DisableElevation handleFilter={ handleFilter } isDisabled={bothSelected}/>
 
-<<<<<<< HEAD
-          <ConfirmDialog dept={ dept } batch={ batch } />
-=======
-           {/* <ConfirmDialog /> */}
->>>>>>> 5513de62c802d2d69f2bb8499187bed0886711be
+          {/* <ConfirmDialog dept={ dept } batch={ batch } /> */}
            </div>
         </div>
         <Divider/>
