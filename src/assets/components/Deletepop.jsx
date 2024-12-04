@@ -2,8 +2,9 @@ import * as React from 'react';
 import { DialogsProvider, useDialogs } from '@toolpad/core/useDialogs';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { deleteBatch } from '../../services/api/main';
 
-function DemoContent() {
+function DemoContent({ dept, batch }) {
   const dialogs = useDialogs();
   return (
     <div>
@@ -14,8 +15,16 @@ function DemoContent() {
             okText: 'Yes',
             cancelText: 'No',
           });
+          console.log({
+              department_id : dept,
+              batch: batch
+            })
           if (confirmed) {
-            
+            const reqData = {
+              department_id : dept,
+              batch: batch
+            }
+            // await deleteBatch(reqData)
             await dialogs.alert("Data Deleted");
           } else {
             await dialogs.alert('deletion cancelled');
@@ -29,10 +38,10 @@ function DemoContent() {
   );
 }
 
-export default function ConfirmDialog() {
+export default function ConfirmDialog({ dept, batch }) {
   return (
     <DialogsProvider>
-      <DemoContent />
+      <DemoContent dept={dept} batch={ batch } />
     </DialogsProvider>
   );
 }
