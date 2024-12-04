@@ -24,7 +24,8 @@ const App = () => {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LoginPage />} />
-          <Route path="/atten" element={<AttendancePage />}/>
+          <Route path="/atten" 
+          element={isAuthenticated ? <AttendancePage /> : <LoginPage />}/>
           
           {/* Protected Route */}
           <Route 
