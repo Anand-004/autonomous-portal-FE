@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 // import './HomePage.css'
 import './Home2.css'
 import InputFileUpload from '../assets/components/UploadFile'
-import ButtonAppBar from '../assets/components/Navbar'
+import ButtonAppBar from '../assets/components/Navbar2.jsx'
 import BasicSelect from '../assets/components/SelectDept'
 import DisableElevation from '../assets/components/Button'
 import Divider from '@mui/material/Divider';
