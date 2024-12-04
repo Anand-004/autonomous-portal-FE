@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ButtonAppBar from '../assets/components/Navbar2'
 import './AttendancePage.css'
 import MultipleSelect from '../assets/components/Select1'
@@ -18,6 +18,9 @@ import LinearIndeterminate from '../assets/components/loading';
 const AttendancePage = () => {
   const [PDFContent, setPDFContent] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  useEffect(() => {
+    
+  },[])
   return (
 <div className="attencont">
       <div className="navdiv">
