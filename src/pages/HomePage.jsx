@@ -211,7 +211,7 @@ const HomePage = () => {
            <div className="Filterright">
            <DisableElevation handleFilter={ handleFilter } isDisabled={bothSelected}/>
 
-           <ConfirmDialog />
+           {/* <ConfirmDialog /> */}
            </div>
            
         </div>

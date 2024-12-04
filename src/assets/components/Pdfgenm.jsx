@@ -48,8 +48,13 @@ const Pdfgenm = ({ data }) => {
         yPosition = 578;
         rowsOnCurrentPage = 0;
       }
+      if(sno<10){
+        currentPage.drawText(`  ${sno}`, { x: 65, y: yPosition, size: fontSize, font, color });
 
-      currentPage.drawText(`${sno}`, { x: 65, y: yPosition, size: fontSize, font, color });
+      }else{
+        currentPage.drawText(`${sno}`, { x: 65, y: yPosition, size: fontSize, font, color });
+
+      }
       currentPage.drawText(`${student.reg_no}`, { x: 95, y: yPosition, size: fontSize, font, color });
       // currentPage.drawText(`${student.name}`, { x: 177, y: yPosition, size: fontSize, font, color });
 
