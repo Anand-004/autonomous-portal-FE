@@ -90,3 +90,12 @@
   .dividerdiv{
     width: 100%;
   }
+
+  .load-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40vh;
+    width: 60%;
+    overflow: hidden;
+  }

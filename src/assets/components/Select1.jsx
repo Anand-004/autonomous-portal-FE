@@ -33,20 +33,20 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function MultipleSelect({ setData }) {
+export default function MultipleSelect({ setData, setIsLoading }) {
   const [personName, setPersonName] = useState(["null"])
   const [btnDisable, setBtnDisable] = useState(false)
   const [allDepts, setAlldepts] = useState(null)
-  const [attendanceData, setAttendanceData] = useState([])
   const [selectedValues, setselectedValues] = useState({
     degree: "",
     batch: "",
     department: "",
-    semester: 0,
+    semester: null,
     subject: ""
   })
   const handleButtonClick = async() => {
     setBtnDisable(true)
+    setIsLoading(true)
     const data = {
       subject_code: selectedValues.subject.code,
       department_id: selectedValues.department,
@@ -67,6 +67,7 @@ export default function MultipleSelect({ setData }) {
     console.log("Final -- ", PDFContent)
     setData(PDFContent)
     setBtnDisable(false)
+    setIsLoading(false)
   }
 
   const handleInitialChange = (e) => {

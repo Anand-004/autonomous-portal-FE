@@ -9,6 +9,7 @@ import ColorButtons from '../assets/components/Attenbutton';
 // import PdfManipulator from '../assets/components/Pdfgena';
 import Pdfgenm from '../assets/components/Pdfgenm';
 import Pdfgena from '../assets/components/Pdfgena';
+import LinearIndeterminate from '../assets/components/loading';
 // import Divider from '@mui/material/Divider';
 
 
@@ -16,6 +17,7 @@ import Pdfgena from '../assets/components/Pdfgena';
 
 const AttendancePage = () => {
   const [PDFContent, setPDFContent] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
   return (
 <div className="attencont">
       <div className="navdiv">
@@ -23,7 +25,7 @@ const AttendancePage = () => {
       </div>
       <div className="filterdiv">
         <div className="filtertopdiv">          
-            <MultipleSelect setData = { setPDFContent } />
+            <MultipleSelect setIsLoading = { setIsLoading } setData = { setPDFContent } />
         </div>
 
         
@@ -32,12 +34,18 @@ const AttendancePage = () => {
       <Divider/>
       </div>
       
-      <div className="togglediv">
-      {/* <ColorButtons /> */}
-      <Pdfgena data={ PDFContent } />
-        {/* <Pdfgena/> */}
-        <Pdfgenm data={ PDFContent }/>
-      </div>
+      { isLoading
+      ? (
+        <div className='load-div'>
+          <LinearIndeterminate />
+        </div>
+      )
+      : PDFContent && ( 
+        <div className="togglediv">
+          <Pdfgena data={ PDFContent } />
+          <Pdfgenm data={ PDFContent }/>
+        </div>
+      )}
       <div className="dividerdiv">
       <Divider/>
       </div>
