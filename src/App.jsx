@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import AttendancePage from './pages/AttendancePage';
 
+
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
