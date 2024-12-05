@@ -19,7 +19,8 @@ const HomePage = () => {
   const [bothSelected, setBothSelected] = useState(true)
   const [isLoad, setIsLoad] = useState(false)
   const [invalid, setInvalid] = useState([])
-
+  const [studentData, setStudentData] = useState([])
+  
   useEffect(()=>{
     console.log("invalid", invalid)
   },[invalid])
@@ -188,7 +189,6 @@ const HomePage = () => {
       console.log("upd")
     }
   }, [dept, batch])
-  const [studentData, setStudentData] = useState([])
   const handleFilter = async() =>{
     setBothSelected(!bothSelected)
     const reqData = {
@@ -211,9 +211,8 @@ const HomePage = () => {
            <div className="Filterright">
            <DisableElevation handleFilter={ handleFilter } isDisabled={bothSelected}/>
 
-           {/* <ConfirmDialog /> */}
+          {/* <ConfirmDialog dept={ dept } batch={ batch } /> */}
            </div>
-           
         </div>
         <Divider/>
         
