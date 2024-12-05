@@ -9,7 +9,7 @@ const theme = createTheme({
 
     primary: {
 
-      main: '#007bff' // Your desired primary color
+      main: '#006fff' // Your desired primary color
 
     }
 

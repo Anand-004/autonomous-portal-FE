@@ -2,7 +2,7 @@ import React from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Button } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
-import attendanceTemplate from './../../pdfs/marksheet.pdf';
+import attendanceTemplate from './../../pdfs/marksheet2.pdf';
 
 const Pdfgenm = ({ data }) => {
   const createPDFForStudent = async (students, department, degree, semester, subjectName, subjectCode) => {
