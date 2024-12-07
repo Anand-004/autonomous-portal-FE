@@ -32,9 +32,12 @@
 
 .filtertopdiv{
     width: 85%;
+    height: 300px;
     /* background-color: aquamarine; */
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: center;
+    padding-left: 150px;
 }
 
 /* .filterdowndiv{
@@ -64,7 +67,7 @@
   }
   .buttondiv{
     margin-top: 20px;
-    margin-left: 160px;
+    margin-left: 120px;
   }
   
   .customButton:hover {

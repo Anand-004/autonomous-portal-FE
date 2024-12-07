@@ -192,7 +192,7 @@ export default function MultipleSelect({ setData, setIsLoading }) {
 
   return (
     <div style={{display: "flex",flexWrap:"wrap",width:"100%"}}>
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 1, width: 250 }}>
       <InputLabel
     id="demo-multiple-name-label"
     sx={{
@@ -224,7 +224,7 @@ export default function MultipleSelect({ setData, setIsLoading }) {
           ))}
         </Select>
       </FormControl>
-      <FormControl sx={{ m: 1, width: 500 }}>
+      <FormControl sx={{ m: 1, width: 400 }}>
         <InputLabel id="demo-multiple-name-label">Department</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
@@ -245,7 +245,7 @@ export default function MultipleSelect({ setData, setIsLoading }) {
           ))}
         </Select>
       </FormControl>
-      <FormControl sx={{ m: 1, width: 400 }}>
+      <FormControl sx={{ m: 1, width: 250 }}>
         <InputLabel id="demo-multiple-name-label">Batch</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
@@ -266,7 +266,7 @@ export default function MultipleSelect({ setData, setIsLoading }) {
           ))}
         </Select>
       </FormControl>
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 1, width: 250 }}>
         <InputLabel id="demo-multiple-name-label">Semester</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
@@ -287,7 +287,7 @@ export default function MultipleSelect({ setData, setIsLoading }) {
           ))}
         </Select>
       </FormControl>
-      <FormControl sx={{ m: 1, width: 500 }}>
+      <FormControl sx={{ m: 1, width: 400 }}>
         <InputLabel id="demo-multiple-name-label">Subject</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
