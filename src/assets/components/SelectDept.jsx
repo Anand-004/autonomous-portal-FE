@@ -64,7 +64,7 @@ export default function BasicSelect({ updateDept, updateBatch, setDeptName }) {
     <div style={{display: "flex", marginLeft: "5%"}}>
       {/* Degree Selection */}
       <Box sx={{ minWidth: 80 }}>
-        <FormControl sx={{ m: 1, minWidth: 300 }}>
+        <FormControl sx={{ m: 1, minWidth: 250 }}>
           <InputLabel id="Degree">Degree</InputLabel>
           <Select
             labelId="Degree"
@@ -84,8 +84,8 @@ export default function BasicSelect({ updateDept, updateBatch, setDeptName }) {
       </Box>
 
       {/* Department Selection */}
-      <Box sx={{ minWidth: 120 }}>
-        <FormControl sx={{ m: 1, minWidth: 500 }}>
+      <Box sx={{ minWidth: 80 }}>
+        <FormControl sx={{ m: 1, minWidth: 300 }}>
           <InputLabel id="Department">Department</InputLabel>
           <Select
             labelId="Department"
@@ -106,8 +106,8 @@ export default function BasicSelect({ updateDept, updateBatch, setDeptName }) {
       </Box>
 
       {/* Batch Selection */}
-      <Box sx={{ minWidth: 120 }}>
-        <FormControl sx={{ m: 1, minWidth: 300 }}>
+      <Box sx={{ minWidth: 80 }}>
+        <FormControl sx={{ m: 1, minWidth: 250 }}>
           <InputLabel id="StudentBatch">Batch</InputLabel>
           <Select
             labelId="StudentBatch"

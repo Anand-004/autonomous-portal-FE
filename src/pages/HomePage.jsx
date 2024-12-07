@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-// import './HomePage.css'
 import './Home2.css'
 import InputFileUpload from '../assets/components/UploadFile'
 import ButtonAppBar from '../assets/components/Navbar2.jsx'
@@ -211,7 +210,7 @@ const HomePage = () => {
            <div className="Filterright">
            <DisableElevation handleFilter={ handleFilter } isDisabled={bothSelected}/>
 
-          {/* <ConfirmDialog dept={ dept } batch={ batch } /> */}
+          <ConfirmDialog dept={ dept } batch={ batch } />
            </div>
         </div>
         <Divider/>

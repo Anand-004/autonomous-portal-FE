@@ -23,7 +23,7 @@ function DemoContent({ dept, batch }) {
               department_id : dept,
               batch: batch
             }
-            // await deleteBatch(reqData)
+            await deleteBatch(reqData)
             await dialogs.alert("Data Deleted");
           } else {
             await dialogs.alert('Deletion Cancelled');
