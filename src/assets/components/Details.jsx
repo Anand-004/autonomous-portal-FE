@@ -71,7 +71,7 @@ const CustomizedTables = ({ dept, studentData }) => {
     // }, 100),
     subjects: data.papers.map((paperObj) => ({
       semester: paperObj.paper.sem_no,
-      code: paperObj.paper.code.includes('T+L') ? paperObj.paper.code.slice(0, 6) : paperObj.paper.code,
+      code: paperObj.paper.code.includes('+') ? paperObj.paper.code.slice(0, 6) : paperObj.paper.code,
       title: paperObj.paper.name,
     })),
     arrears: data.papers.length,

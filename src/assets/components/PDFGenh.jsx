@@ -2,7 +2,7 @@ import React from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Button } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
-import pdf from './../../pdfs/hallticket.pdf';
+import pdf from './../../pdfs/hallticket2.pdf.pdf';
 import { Download, FirstPage, Photo } from '@mui/icons-material';
 import { blue } from '@mui/material/colors';
 import ArticleIcon from '@mui/icons-material/Article';
@@ -79,7 +79,7 @@ if (image) {
   const imageWidth = 45;
   const imageHeight = 57;
   const imageX = 460;
-  const imageY = 660;
+  const imageY = 660-10;
 
   firstPage.drawImage(image, {
     x: imageX,
@@ -105,17 +105,17 @@ if (image) {
     // });
 
     // Populate the dynamic fields on the PDF for the student
-    firstPage.drawText(`${student.name}`, { x: 100, y: 706, size: fontSize, font, color });
-    firstPage.drawText(dept.degree, { x: 100, y: 706 - 18, size: fontSize, font, color });
-    firstPage.drawText(`${dept.department}`, { x: 310, y: 706 - 18, size: fontSize, font, color });
-    firstPage.drawText(`${student.regNo}`, { x: 310, y: 706, size: fontSize, font, color });
-    firstPage.drawText(`${student.dob}`, { x: 100, y: 670, size: fontSize, font, color });
+    firstPage.drawText(`${student.name}`, { x: 100, y: 698, size: fontSize, font, color });
+    firstPage.drawText(dept.degree, { x: 100, y: 706 - 28, size: fontSize, font, color });
+    firstPage.drawText(`${dept.department}`, { x: 310, y: 706 -29, size: fontSize, font, color });
+    firstPage.drawText(`${student.regNo}`, { x: 310, y: 706-9, size: fontSize, font, color });
+    firstPage.drawText(`${student.dob}`, { x: 100, y: 670-10, size: fontSize, font, color });
   // firstPage.drawText(`2021`, { x: 455, y: yPosition - 12, size: fontSize, font, color });
     // firstPage.drawText(`Total Fees : Rs.${student.totalFees}`, { x: 430, y: 233, size: 9,font, color });
     // firstPage.drawText(`No of Subjects: ${student.arrears}`, { x: 160, y: 233, size: fontSize,font, color });
 
     // Add subjects
-    let subjectYPosition = 637;
+    let subjectYPosition = 637-10;
     let sno = 1;
     student.subjects.forEach((subject) => {
       if (sno<10) {
@@ -201,7 +201,7 @@ if (image) {
   const imageWidth = 45;
   const imageHeight = 57;
   const imageX = 460;
-  const imageY = 660;
+  const imageY = 660-10;
 
   page.drawImage(image, {
     x: imageX,
@@ -218,20 +218,20 @@ if (image) {
 
   
       // Populate the dynamic fields on the PDF for each student
-   page.drawText(`${student.name}`, { x: 100, y: 706, size: fontSize, font, color });
+   page.drawText(`${student.name}`, { x: 100, y: 706-8, size: fontSize, font, color });
   //  page.drawText(`B.E` , { x: 100, y: 706-18 , size: fontSize, font, color });
-   page.drawText(dept.degree, { x: 100, y: 706 - 18, size: fontSize, font, color });
+   page.drawText(dept.degree, { x: 100, y: 706 - 18-9, size: fontSize, font, color });
 
 
-   page.drawText(`${dept?.department}` , { x: 310, y: 706-18 , size: fontSize, font, color });
+   page.drawText(`${dept?.department}` , { x: 310, y: 706-18-10 , size: fontSize, font, color });
 
-   page.drawText(`${student.regNo}`, { x: 310, y: 706, size: fontSize, font, color });
-   page.drawText(`${student.dob}`, { x: 100, y: 670, size: fontSize, font, color });
+   page.drawText(`${student.regNo}`, { x: 310, y: 706-9, size: fontSize, font, color });
+   page.drawText(`${student.dob}`, { x: 100, y: 670-10, size: fontSize, font, color });
       // page.drawText(`Rs.${student.totalFees || 0}`, { x: 430, y: 100, size: fontSize, font, color });
       // page.drawText(`${student.arrears}` || "", { x: 160, y: 100, size: fontSize, font, color });
   
       // Add subjects
-      let subjectYPosition = 637;
+      let subjectYPosition = 637-10;
       let sno = 1;
 
       student.subjects.forEach((subject) => {
@@ -242,7 +242,7 @@ if (image) {
           page.drawText(`${sno}`,{ x: 46, y: subjectYPosition, size: fontSize, font, color });
         }
     page.drawText(`0${subject.semester}`,{ x: 78, y: subjectYPosition, size: fontSize, font, color });
-    page.drawText(`${subject.code}`,{ x: 118, y: subjectYPosition, size: fontSize, font, color });
+    page.drawText(`${subject.code.includes('+') ? subject.code.slice(0,6) : subject.code}`,{ x: 118, y: subjectYPosition, size: fontSize, font, color });
     page.drawText(`${subject.title}`,{ x: 173, y: subjectYPosition, size: fontSize, font, color });
 
       sno=sno+1;
@@ -253,7 +253,7 @@ if (image) {
       if (subjectYPosition < 100) {
         const [overflowTemplatePage] = await pdfDoc.copyPages(pdfDoc, [0]); // Add a new template page for overflow
         pdfDoc.addPage(overflowTemplatePage);
-        subjectYPosition = 733; // Reset yPosition for overflow page
+        subjectYPosition = 733-8; // Reset yPosition for overflow page
       }
     }
     // removes the template 

@@ -30,7 +30,7 @@ const Pdfgenm = ({ data }) => {
     const fillStaticFields = (page) => {
       page.drawText(degree, { x: 120, y: 680, size: fontSize, font, color });
       page.drawText(subjectName, { x: 140, y: 662, size: fontSize, font, color });
-      page.drawText(subjectCode, { x: 500, y: 661, size: fontSize, font, color });
+      page.drawText(subjectCode.includes('+') ? subjectCode.slice(0,6) : subjectCode, { x: 500, y: 661, size: fontSize, font, color });
       page.drawText(`0${semester}`, { x: 480, y: 681, size: fontSize, font, color });
       page.drawText(department, { x: 140, y: 680, size: fontSize, font, color });
     };

@@ -58,7 +58,11 @@ function PDFGenerator({ id, handleReceipt, receiptData }) {
     // Add subjects dynamically
     let yPosition = 680;
     student.subjects.forEach((subject) => {
-      firstPage.drawText(`${subject.semester}       ${subject.code}         ${subject.title}`, { x: 35, y: yPosition, size: fontSize, font, color });
+      // console.log("++++",subject)
+      // subject.code.includes('+') && console.log("++++",subject)
+      // const code = subject.code.includes('+') ? subject.code.slice(0,6) : subject.code
+      console.log(code)
+      firstPage.drawText(`${subject.semester}       ${subject.code.includes('+') ? subject.code.slice(0,6) : subject.code}         ${subject.title}`, { x: 35, y: yPosition, size: fontSize, font, color });
       yPosition -= 15; // Adjust line height
     });
 
