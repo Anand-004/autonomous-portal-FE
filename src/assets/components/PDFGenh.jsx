@@ -61,17 +61,44 @@ try {
   }
 } catch (error) {
   console.error(`Error fetching images for ${student.regNo}:`, error);
-  // Attempt to use the placeholder in case of fetch failure
+
+  // new code here
+
+  const photoURL2 = `src/assets/photos/${student.regNo}.jpg`; // checks jpg
   try {
-    const placeholderResponse = await fetch(placeholderURL);
-    if (placeholderResponse.ok) {
-      const placeholderBytes = await placeholderResponse.arrayBuffer();
-      image = await pdfDoc.embedJpg(placeholderBytes);
+    // Attempt to fetch the student's image
+    const imageResponse = await fetch(photoURL2);
+    // console.log("IN")
+    if (imageResponse.ok) {
+      // console.log("pakka")
+      const imageBytes = await imageResponse.arrayBuffer();
+      image = await pdfDoc.embedJpg(imageBytes);
     } else {
-      console.error('Failed to fetch placeholder image. Skipping image.');
+      // Log and use placeholder if student image doesn't exist
+      console.warn(`Image not found for ${student.regNo}. Using placeholder.`);
+      const placeholderResponse = await fetch(placeholderURL);
+      if (placeholderResponse.ok) {
+        const placeholderBytes = await placeholderResponse.arrayBuffer();
+        image = await pdfDoc.embedJpg(placeholderBytes);
+      } else {
+        throw new Error('Placeholder image not found!');
+      }
     }
-  } catch (placeholderError) {
-    console.error('Error fetching placeholder image:', placeholderError);
+  } catch (error) {
+    //2nd try fails
+    console.error(`Error fetching images for ${student.regNo}:`, error);
+    // Attempt to use the placeholder in case of fetch failure
+    try {
+      const placeholderResponse = await fetch(placeholderURL);
+      if (placeholderResponse.ok) {
+        const placeholderBytes = await placeholderResponse.arrayBuffer();
+        image = await pdfDoc.embedJpg(placeholderBytes);
+      } else {
+        console.error('Failed to fetch placeholder image. Skipping image.');
+      }
+    } catch (placeholderError) {
+      console.error('Error fetching placeholder image:', placeholderError);
+    }
   }
 }
 // Add the image to the PDF if it exists
